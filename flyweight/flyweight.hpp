@@ -32,12 +32,17 @@ private:
 class UniqueState
 {
 public:
-	UniqueState();
+	UniqueState(std::string owner, std::string plateNumber);
 	~UniqueState();
 
-	int GetAge();
-	double GetHeight();
+	friend std::ostream& operator<<(std::ostream& os, const UniqueState& us);
+
+	std::string GetOwner();
+	std::string GetPlateNumber();
 	
+	void SetOwner(std::string owner);
+	void SetPlateNumber(std::string plateNumber);
+
 private:
 	std::string owner;
 	std::string plateNumber;
@@ -48,10 +53,13 @@ private:
 class Car
 {
 public: 
-	Car();
+	Car(const SharedState * sharedState);
+	Car(const Car & car); // copy constructor
 	~Car();
 
 	SharedState * GetSharedState() const;
+
+	void Print(const UniqueState& unique_state) const;
 
 private:
 	SharedState * sharedState;
