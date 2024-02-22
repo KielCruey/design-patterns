@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include <unordered_map>
 
 // =========== States ===========
@@ -6,15 +7,25 @@
 class SharedState
 {
 public:
-	SharedState();
+	SharedState(const std::string &brand, 
+				const std::string &model, 
+				const std::string  &color);
 	~SharedState();
 
-	std::string GetTreeType();
-	std::string GetTreeSpecies();
+	friend std::ostream& operator<<(std::ostream& os, const SharedState& ss);
+
+	std::string GetBrand();
+	std::string GetModel();
+	std::string GetColor();
+
+	void GetBrand(std::string brand);
+	void GetModel(std::string model);
+	void GetColor(std::string color);
 
 private:
-	std::string treeType;
-	std::string treeSpecies;
+	std::string brand;
+	std::string model;
+	std::string color;
 };
 
 // extrinsic state class
@@ -28,22 +39,17 @@ public:
 	double GetHeight();
 	
 private:
-	int age;
-	double height;
+	std::string owner;
+	std::string plateNumber;
 };
 
-/**
- * The Flyweight stores a common portion of the state (also called intrinsic
- * state) that belongs to multiple real entities. The Flyweight accepts
- * the rest of the state (extrinsic state, unique for each entity) via its
- * method parameters.
- */
 
-class Flyweight
+// =========== Flyweight ===========
+class Car
 {
 public: 
-	Flyweight();
-	~Flyweight();
+	Car();
+	~Car();
 
 	SharedState * GetSharedState() const;
 
@@ -57,5 +63,6 @@ public:
 
 
 private:
-	std::unordered_map<std::string, Flyweight> flyweight;
+	std::unordered_map<std::string, Car> flyweight;
+	std::string GetKey(const SharedState &ss);
 };
