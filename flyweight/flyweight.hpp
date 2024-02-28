@@ -72,5 +72,5 @@ public:
 
 private:
 	std::unordered_map<std::string, Car> flyweight;
-	std::string GetKey(const SharedState &ss);
+	std::string GetKey(const SharedState &sharedState);
 };
