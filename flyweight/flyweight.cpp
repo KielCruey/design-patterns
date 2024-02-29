@@ -8,16 +8,16 @@ SharedState::SharedState(const std::string& brand,
 	model(model),
 	color(color)	
 {
-	std::cout << "SharedState created" << std::endl;
+	printToConsole("SharedState created");
 }
 
 SharedState::~SharedState() {
-	std::cout << "SharedState deleted" << std::endl;
+	printToConsole("SharedState deleted");
 }
 
 std::ostream& operator<<(std::ostream& os, const SharedState& ss)
 {
-	return os << "[ " << ss.brand << " , " << ss.model << " , " << ss.color << " ]";
+	 return os << "[ " << ss.brand << " , " << ss.model << " , " << ss.color << " ]";
 }
 
 std::string SharedState::GetBrand() const {
@@ -37,11 +37,11 @@ UniqueState::UniqueState(std::string owner, std::string plateNumber) :
 	owner(owner),
 	plateNumber(plateNumber)
 {
-	std::cout << "UniqueState created" << std::endl;
+	printToConsole("UniqueState created");
 }
 
 UniqueState::~UniqueState() {
-	std::cout << "UniqueState deleted" << std::endl;
+	printToConsole("UniqueState deleted");
 }
 
 std::ostream& operator<<(std::ostream& os, const UniqueState& us) {
@@ -68,19 +68,19 @@ void UniqueState::SetPlateNumber(std::string plateNumber) {
 Car::Car(const SharedState* sharedState) :
 	sharedState(new SharedState(*sharedState))
 {
-	std::cout << "Car created" << std::endl;
+	printToConsole("Car created");
 }
 
 // copy constructor
 Car::Car(const Car& car) :
 	sharedState(new SharedState(*car.sharedState))
 {
-	std::cout << "Copy constructor" << std::endl;
+	printToConsole("Car's Copy constructor");
 }
 
 Car::~Car() {
 	delete sharedState;
-	std::cout << "Car deleted" << std::endl;
+	printToConsole("Car deleted");
 }
 
 SharedState * Car::GetSharedState() const {
@@ -93,11 +93,15 @@ void Car::Print(const UniqueState& uniqueState) const {
 
 // =========== CarFactory ===========
 CarFactory::CarFactory(std::initializer_list<SharedState> shareStates) {
-	std::cout << "CarFactory created" << std::endl;
+	printToConsole("CarFactory created");
+
+	for (const SharedState& ss : shareStates) {
+		cars.insert(std::make_pair<std::string, Car>(getKey(ss), Car(&ss)));
+	}
 }
 
 CarFactory::~CarFactory() {
-	std::cout << "CarFactory destroyed" << std::endl;
+	printToConsole("CarFactory destroyed");
 }
 
 Car CarFactory::GetCar(const SharedState& sharedState) {
@@ -105,11 +109,11 @@ Car CarFactory::GetCar(const SharedState& sharedState) {
 
 	// check if a Car with a certain key exists in unordered_map
 	if (cars.find(key) == cars.end()) {
-		std::cout << "FlyweightFactory: Can't find a flyweight, creating new one." << std::endl;
+		printToConsole("FlyweightFactory: Can't find a flyweight, creating new one.");
 		cars.insert(std::make_pair(key, Car(&sharedState)));
 	}
 	else {
-		std::cout << "FlyweightFactory: Reusing existing flyweight.\n";
+		printToConsole("FlyweightFactory: Reusing existing flyweight.");
 	}
 
 	return cars.at(key);
@@ -131,7 +135,9 @@ std::string CarFactory::getKey(const SharedState& ss) const {
 
 // =========== Main ===========
 int main() {
-	SharedState * sharedState = new SharedState("Subaru", "BRZ", "Red");
+	CarFactory * factory = new CarFactory({ {"Subaru", "BRZ", "Red"}, { "Subaru", "WRX", "Blue" } });
+
+	factory->ListCars();
 
 	return 0;
 }

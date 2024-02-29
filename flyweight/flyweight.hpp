@@ -2,6 +2,11 @@
 #include <string>
 #include <unordered_map>
 
+// =========== utility functions ===========
+static void printToConsole(std::string string) {
+	std::cout << string << std::endl;
+}
+
 // =========== States - intrinsic state class ===========
 // intrinsic states in this class can only be read only member variables and not written 
 // since they are all common for all the objects of this class
