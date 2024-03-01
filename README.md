@@ -26,6 +26,10 @@ The goal is to have the code:
 [Article](https://www.bogotobogo.com/DesignPatterns/command.php)
 [Article #2](https://refactoring.guru/design-patterns/command)
 
+### Iterator
+[Article](https://medium.com/geekculture/iterator-design-pattern-in-c-42caec84bfc)
+[Article 2](https://www.vishalchovatiya.com/iterator-design-pattern-in-modern-cpp/)
+
 ### Memento
 [Article](https://refactoring.guru/design-patterns/memento)
 
@@ -84,3 +88,10 @@ The goal is to have the code:
 Another good [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
 
 [Design Pattern Wiki](https://en.wikipedia.org/wiki/Software_design_pattern#Concurrency_patterns)
+
+## General Resources
+[Design Patters](https://refactoring.guru/)
+[Source Making](https://sourcemaking.com/)
+
+# Compiling Code
+This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
