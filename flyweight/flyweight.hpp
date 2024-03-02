@@ -62,7 +62,7 @@ public:
 
 	SharedState * GetSharedState() const;
 
-	void Print(const UniqueState& unique_state) const;
+	void Print(const UniqueState& uniqueState) const; // prints shared
 
 private:
 	SharedState * sharedState;
