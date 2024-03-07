@@ -21,9 +21,9 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const SharedState& ss);
 
 	// can't set member variables because intrensic class
-	std::string GetBrand() const;
-	std::string GetModel() const;
-	std::string GetColor() const;
+	inline std::string GetBrand() const;
+	inline std::string GetModel() const;
+	inline std::string GetColor() const;
 
 private:
 	// read only variables
@@ -41,11 +41,11 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& os, const UniqueState& us);
 
-	std::string GetOwner() const;
-	std::string GetPlateNumber() const;
+	inline std::string GetOwner() const;
+	inline std::string GetPlateNumber() const;
 	
-	void SetOwner(std::string owner);
-	void SetPlateNumber(std::string plateNumber);
+	inline void SetOwner(std::string owner);
+	inline void SetPlateNumber(std::string plateNumber);
 
 private:
 	std::string owner;
@@ -60,7 +60,7 @@ public:
 	Car(const Car & car); // copy constructor
 	~Car();
 
-	SharedState * GetSharedState() const;
+	inline SharedState * GetSharedState() const;
 
 	void Print(const UniqueState& uniqueState) const; // prints shared
 
@@ -81,3 +81,5 @@ private:
 	std::string getKey(const SharedState& ss) const; // gets object with unique key or creates a new key 
 	std::unordered_map<std::string, Car> cars; // stores all the extrensic state classes
 };
+
+#include "flyweight.inl"
