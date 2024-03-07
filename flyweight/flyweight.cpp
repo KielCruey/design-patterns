@@ -15,21 +15,8 @@ SharedState::~SharedState() {
 	printToConsole("SharedState deleted");
 }
 
-std::ostream& operator<<(std::ostream& os, const SharedState& ss)
-{
-	 return os << "[ " << ss.brand << " , " << ss.model << " , " << ss.color << " ]";
-}
-
-std::string SharedState::GetBrand() const {
-	return this->brand;
-}
-
-std::string SharedState::GetModel() const {
-	return  this->model;
-}
-
-std::string SharedState::GetColor() const {
-	return this->color;
+std::ostream& operator<<(std::ostream& os, const SharedState& ss) {
+	return os << "[ " << ss.brand << " , " << ss.model << " , " << ss.color << " ]";
 }
 
 // =========== UniqueState ===========
@@ -48,22 +35,6 @@ std::ostream& operator<<(std::ostream& os, const UniqueState& us) {
 	return os << "[ " << us.owner << " , " << us.plateNumber << " ]";
 }
 
-std::string UniqueState::GetOwner() const {
-	return this->owner;
-}
-
-std::string UniqueState::GetPlateNumber() const {
-	return this->plateNumber;
-}
-
-void UniqueState::SetOwner(std::string owner) {
-	this->owner = owner;
-}
-
-void UniqueState::SetPlateNumber(std::string plateNumber) {
-	this->plateNumber = plateNumber;
-}
-
 // =========== Flyweight ===========
 Car::Car(const SharedState* sharedState) :
 	sharedState(new SharedState(*sharedState))
@@ -71,7 +42,7 @@ Car::Car(const SharedState* sharedState) :
 	printToConsole("Car created");
 }
 
-// copy constructor
+// copy constructor -- creates a dynamic memory object
 Car::Car(const Car& car) :
 	sharedState(new SharedState(*car.sharedState))
 {
@@ -81,10 +52,6 @@ Car::Car(const Car& car) :
 Car::~Car() {
 	delete sharedState;
 	printToConsole("Car deleted");
-}
-
-SharedState * Car::GetSharedState() const {
-	return this->sharedState;
 }
 
 void Car::Print(const UniqueState& uniqueState) const {
@@ -123,8 +90,7 @@ void CarFactory::ListCars() const {
 	size_t count = cars.size();
 
 	std::cout << "CarFactory: has " << count << " cars:" << std::endl;
-	for (std::pair<std::string, Car> pair : cars)
-	{
+	for (std::pair<std::string, Car> pair : cars) {
 		std::cout << pair.first << std::endl;
 	}
 }
