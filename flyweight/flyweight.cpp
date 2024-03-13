@@ -1,5 +1,10 @@
 #include "flyweight.hpp"
 
+// =========== Helper Functions =========== 
+static void printToConsole(std::string string) {
+	std::cout << string << std::endl;
+}
+
 // =========== SharedState ===========
 SharedState::SharedState(const std::string& brand,
 						const std::string& model,
@@ -98,6 +103,9 @@ void CarFactory::ListCars() const {
 std::string CarFactory::getKey(const SharedState& ss) const {
 	return ss.GetBrand() + "_" + ss.GetModel() + "_" + ss.GetColor();
 }
+
+// =========== Client Code ===========
+
 
 // =========== Main ===========
 int main() {
