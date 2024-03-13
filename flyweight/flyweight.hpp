@@ -2,14 +2,9 @@
 #include <string>
 #include <unordered_map>
 
-// =========== utility functions ===========
-static void printToConsole(std::string string) {
-	std::cout << string << std::endl;
-}
-
 // =========== States - intrinsic state class ===========
-// intrinsic states in this class can only be read only member variables and not written 
-// since they are all common for all the objects of this class
+// Intrinsic states in this class can only be read only member variables and not be written 
+// since they are all common for all the objects of this class.
 class SharedState
 {
 public:
@@ -18,9 +13,10 @@ public:
 				const std::string &color = nullptr);
 	~SharedState();
 
+	// prints out all member variables to console
 	friend std::ostream& operator<<(std::ostream& os, const SharedState& ss);
 
-	// can't set member variables because intrensic class
+	// can't set member variables because intrensic class, all should be the same
 	inline std::string GetBrand() const;
 	inline std::string GetModel() const;
 	inline std::string GetColor() const;
@@ -32,18 +28,20 @@ private:
 	std::string color;
 };
 
-// extrinsic state class
+// Extrinsic state in this class differ from object to object
 class UniqueState
 {
 public:
-	UniqueState(std::string owner, std::string plateNumber);
+	UniqueState(std::string owner, 
+				std::string plateNumber);
 	~UniqueState();
 
+	// prints out all member variables to console
 	friend std::ostream& operator<<(std::ostream& os, const UniqueState& us);
 
+	// getters/setters
 	inline std::string GetOwner() const;
 	inline std::string GetPlateNumber() const;
-	
 	inline void SetOwner(std::string owner);
 	inline void SetPlateNumber(std::string plateNumber);
 
@@ -53,6 +51,7 @@ private:
 };
 
 // =========== Flyweight ===========
+// Flyweight class stores the intrensic data and accept extrensic state as a parameter
 class Car
 {
 public: 
@@ -62,15 +61,21 @@ public:
 
 	inline SharedState * GetSharedState() const;
 
-	void Print(const UniqueState& uniqueState) const; // prints shared
+	// prints all data information
+	void Print(const UniqueState& uniqueState) const;
 
 private:
+	// all the common data as a reference
 	SharedState * sharedState;
 };
 
+// Car flyweight factor creates and magages all the flyweight objects.
+// When the client requests a flyweight, the factory either returns an existing instance or creates a new one, 
+// if it doesn't exist yet.
 class CarFactory
 {
 public:
+	// allows to use the curly brackets {} to define a set of data to the constructor
 	CarFactory(std::initializer_list<SharedState> shareStates);
 	~CarFactory();
 
@@ -79,7 +84,7 @@ public:
 
 private:
 	std::string getKey(const SharedState& ss) const; // gets object with unique key or creates a new key 
-	std::unordered_map<std::string, Car> cars; // stores all the extrensic state classes
+	std::unordered_map<std::string, Car> cars; // stores all the extrensic state classes via a key
 };
 
 #include "flyweight.inl"
