@@ -11,20 +11,20 @@ inline std::string SharedState::GetColor() const {
 	return this->color;
 }
 
-// =========== UniqueState ===========
-inline std::string UniqueState::GetOwner() const {
+// =========== UnsharedState ===========
+inline std::string UnsharedState::GetOwner() const {
 	return this->owner;
 }
 
-inline std::string UniqueState::GetPlateNumber() const {
+inline std::string UnsharedState::GetPlateNumber() const {
 	return this->plateNumber;
 }
 
-inline void UniqueState::SetOwner(std::string owner) {
+inline void UnsharedState::SetOwner(std::string owner) {
 	this->owner = owner;
 }
 
-inline void UniqueState::SetPlateNumber(std::string plateNumber) {
+inline void UnsharedState::SetPlateNumber(std::string plateNumber) {
 	this->plateNumber = plateNumber;
 }
 

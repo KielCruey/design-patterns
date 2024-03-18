@@ -2,7 +2,7 @@
 #include <string>
 #include <unordered_map>
 
-// =========== States - intrinsic state class ===========
+// =========== Intrinsic State ===========
 // Intrinsic states in this class can only be read only member variables and not be written 
 // since they are all common for all the objects of this class.
 class SharedState
@@ -28,16 +28,17 @@ private:
 	std::string color;
 };
 
+// =========== Extrinsic State ===========
 // Extrinsic state in this class differ from object to object
-class UniqueState
+class UnsharedState
 {
 public:
-	UniqueState(std::string owner, 
+	UnsharedState(std::string owner, 
 				std::string plateNumber);
-	~UniqueState();
+	~UnsharedState();
 
 	// prints out all member variables to console
-	friend std::ostream& operator<<(std::ostream& os, const UniqueState& us);
+	friend std::ostream& operator<<(std::ostream& os, const UnsharedState& us);
 
 	// getters/setters
 	inline std::string GetOwner() const;
@@ -62,13 +63,14 @@ public:
 	inline SharedState * GetSharedState() const;
 
 	// prints all data information
-	void Print(const UniqueState& uniqueState) const;
+	void Print(const UnsharedState& UnsharedState) const;
 
 private:
 	// all the common data as a reference
 	SharedState * sharedState;
 };
 
+// =========== Flyweight Factory ===========
 // Car flyweight factor creates and magages all the flyweight objects.
 // When the client requests a flyweight, the factory either returns an existing instance or creates a new one, 
 // if it doesn't exist yet.
