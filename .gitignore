@@ -1,5 +1,6 @@
 # project based files
 *.exe
 *.vscode
+*.vs
 
 doxygen/*
