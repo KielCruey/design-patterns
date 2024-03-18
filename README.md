@@ -63,6 +63,9 @@ The goal is to have the code:
 ### Facade
 [Article](https://medium.com/@andreaspoyias/design-patterns-a-quick-guide-to-facade-pattern-16e3d2f1bfb6)
 
+### Flyweight
+[Article](https://advancedcppwithexamples.blogspot.com/2010/10/c-example-of-flyweight-design-pattern.html)
+
 ### Composite
 [Article](https://refactoring.guru/design-patterns/composite)
 
@@ -84,3 +87,7 @@ The goal is to have the code:
 Another good [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
 
 [Design Pattern Wiki](https://en.wikipedia.org/wiki/Software_design_pattern#Concurrency_patterns)
+
+
+# Compiling Code
+This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
