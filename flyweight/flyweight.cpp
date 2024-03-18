@@ -24,19 +24,19 @@ std::ostream& operator<<(std::ostream& os, const SharedState& ss) {
 	return os << "[ " << ss.brand << " , " << ss.model << " , " << ss.color << " ]";
 }
 
-// =========== UniqueState ===========
-UniqueState::UniqueState(std::string owner, std::string plateNumber) :
+// =========== UnsharedState ===========
+UnsharedState::UnsharedState(std::string owner, std::string plateNumber) :
 	owner(owner),
 	plateNumber(plateNumber)
 {
-	printToConsole("UniqueState created");
+	printToConsole("UnsharedState created");
 }
 
-UniqueState::~UniqueState() {
-	printToConsole("UniqueState deleted");
+UnsharedState::~UnsharedState() {
+	printToConsole("UnsharedState deleted");
 }
 
-std::ostream& operator<<(std::ostream& os, const UniqueState& us) {
+std::ostream& operator<<(std::ostream& os, const UnsharedState& us) {
 	return os << "[ " << us.owner << " , " << us.plateNumber << " ]";
 }
 
@@ -59,14 +59,15 @@ Car::~Car() {
 	printToConsole("Car deleted");
 }
 
-void Car::Print(const UniqueState& uniqueState) const {
-	std::cout << "Car flyweight: Displaying shared (" << *GetSharedState() << ") and unique (" << uniqueState << " state" << std::endl;
+void Car::Print(const UnsharedState& UnsharedState) const {
+	std::cout << "Car flyweight: Displaying shared (" << *GetSharedState() << ") and unique (" << UnsharedState << " state" << std::endl;
 }
 
 // =========== CarFactory ===========
 CarFactory::CarFactory(std::initializer_list<SharedState> shareStates) {
 	printToConsole("CarFactory created");
 
+	// added all the initializer list 'objects' into the unordered_map
 	for (const SharedState& ss : shareStates) {
 		cars.insert(std::make_pair<std::string, Car>(getKey(ss), Car(&ss)));
 	}
@@ -109,7 +110,12 @@ std::string CarFactory::getKey(const SharedState& ss) const {
 
 // =========== Main ===========
 int main() {
-	CarFactory * factory = new CarFactory({ {"Subaru", "BRZ", "Red"}, { "Subaru", "WRX", "Blue" } });
+
+
+	CarFactory * factory = new CarFactory({ {"Subaru", "BRZ", "Red"} });
+
+
+	//CarFactory * factory = new CarFactory({ {"Subaru", "BRZ", "Red"}, { "Subaru", "WRX", "Blue" } });
 
 	factory->ListCars();
 
