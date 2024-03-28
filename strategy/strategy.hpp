@@ -1,4 +1,5 @@
-#include <vector>
+#include <memory>
+#include <string>
 
 const double BIKE_RATE = 10.0;
 const double BIKE_FARE = 0.0;
@@ -9,11 +10,24 @@ const double BIKE_FARE = 3.0; // per trip
 const double CAR_RATE = 50.0;
 const double BIKE_FARE = 4.5; // per gallon of gas
 
+// ========== Helper Classes ==========
+class TravelPlans
+{
+	TravelPlans(std::string citysName = nullptr,
+				int milesToTravel = NULL);
+	~TravelPlans() = default;
+
+private:
+	std::string citysName;
+	int milesToTravel;
+};
+
 // ========== Abstract Strategy ==========
 class CommuteStrategy
 {
 public:
-	CommuteStrategy(const double averageRateOfTravel = NULL,
+	CommuteStrategy(std::unique_ptr<TravelPlans *> travelPlans = nullptr,
+					const double averageRateOfTravel = NULL,
 					double costToTravel = NULL);
 	virtual ~CommuteStrategy() = default;
 
@@ -27,6 +41,8 @@ public:
 	inline void setCostToTravel(double costToTravel);
 
 private:
+	std::unique_ptr<TravelPlans*> travelPlans;
+
 	const double averageRateOfTravel; // in mph
 	double costToTravel; // in USD
 };
@@ -35,7 +51,8 @@ private:
 class Bike : public CommuteStrategy
 {
 public:
-	Bike();
+	Bike(TravelPlans * travelPlans = nullptr, 
+		 double totalTimeCommuted = NULL);
 	virtual ~Bike() override = default;
 	void travelToDestination() override;
 
@@ -80,7 +97,7 @@ private:
 class TravelTrip
 {
 public:
-	explicit TravelTrip(CommuteStrategy&& commuteStrategy);
+	explicit TravelTrip(std::unique_ptr<CommuteStrategy> && commuteStrategy);
 	virtual ~TravelTrip();
 
 	void travel(CommuteStrategy* commuteStrategy);
@@ -89,7 +106,7 @@ public:
 	inline void setCommuteStrategy(CommuteStrategy* commuteStrategy);
 
 private:
-	CommuteStrategy * commuteStrategy;
+	std::unique_ptr<CommuteStrategy> commuteStrategy;
 };
 
 #include "strategy.inl"
