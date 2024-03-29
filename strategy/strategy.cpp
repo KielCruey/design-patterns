@@ -8,7 +8,7 @@ TravelPlans::TravelPlans(std::string citysName,
 { }
 
 // ========== Commute Strategy ==========
-CommuteStrategy::CommuteStrategy(std::unique_ptr<TravelPlans*> travelPlans,
+CommuteStrategy::CommuteStrategy(std::unique_ptr<TravelPlans> travelPlans,
 								 double averageRateOfTravel,
 								 double costToTravel) :
 	travelPlans(std::make_unique<TravelPlans *>(travelPlans)),
@@ -17,11 +17,13 @@ CommuteStrategy::CommuteStrategy(std::unique_ptr<TravelPlans*> travelPlans,
 { }
 
 // ========== Commute Strategy ==========
-Bike::Bike(TravelPlans * travelPlans,
+Bike::Bike(std::unique_ptr<TravelPlans>(travelPlans),
 		   double totalTimeCommuted) :
-	CommuteStrategy(BIKE_RATE, BIKE_FARE),
-	totalTimeCommuted(totalTimeCommuted)
-{ }
+	totalTimeCommuted(totalTimeCommuted),
+	CommuteStrategy(travelPlans,BIKE_RATE, BIKE_FARE)
+{ 
+
+}
 
 void Bike::travelToDestination() {
 

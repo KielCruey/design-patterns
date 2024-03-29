@@ -26,7 +26,7 @@ private:
 class CommuteStrategy
 {
 public:
-	CommuteStrategy(std::unique_ptr<TravelPlans *> travelPlans = nullptr,
+	CommuteStrategy(std::unique_ptr<TravelPlans> travelPlans = nullptr,
 					const double averageRateOfTravel = NULL,
 					double costToTravel = NULL);
 	virtual ~CommuteStrategy() = default;
@@ -41,7 +41,7 @@ public:
 	inline void setCostToTravel(double costToTravel);
 
 private:
-	std::unique_ptr<TravelPlans*> travelPlans;
+	std::unique_ptr<TravelPlans> travelPlans;
 
 	const double averageRateOfTravel; // in mph
 	double costToTravel; // in USD
@@ -51,7 +51,7 @@ private:
 class Bike : public CommuteStrategy
 {
 public:
-	Bike(TravelPlans * travelPlans = nullptr, 
+	Bike(std::unique_ptr<TravelPlans>(travelPlans) = nullptr, 
 		 double totalTimeCommuted = NULL);
 	virtual ~Bike() override = default;
 	void travelToDestination() override;
