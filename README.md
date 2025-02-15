@@ -41,6 +41,9 @@ For the factor method, there seems to be three ways it is implemented:
 ### Command
 [Article](https://www.bogotobogo.com/DesignPatterns/command.php)
 
+### Observer
+A simple subject class will have other class as an observer(s). Anytime the subject changes state, the observer(s) will be notified. Basically the subject class has a bunch of dependency classes, and the dependency classes will be notified and update automatically.
+
 # General Resource
 Another good [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
 
