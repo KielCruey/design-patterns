@@ -41,13 +41,15 @@ For the factor method, there seems to be three ways it is implemented:
 ### Command
 [Article](https://www.bogotobogo.com/DesignPatterns/command.php)
 
-### Observer
-A simple subject class will have other class as an observer(s). Anytime the subject changes state, the observer(s) will be notified. Basically the subject class has a bunch of dependency classes, and the dependency classes will be notified and update automatically.
-
 # General Resource
 Another good [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
 
 [Design Pattern Wiki](https://en.wikipedia.org/wiki/Software_design_pattern#Concurrency_patterns)
+
+### Observer
+A simple subject class will have other class as an observer(s). Anytime the subject changes state,
+the observer(s) will be notified. Basically the subject class has a bunch of dependency classes, 
+and the dependency classes will be notified and update automatically.
 
 # Compiling Code
 This [video](https://www.youtube.com/watch?v=3-9sObAg6R0) helps with compiling on VS code.
