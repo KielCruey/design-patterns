@@ -36,6 +36,11 @@ For the factor method, there seems to be three ways it is implemented:
 ## Proxy
 [Article](https://cppcodetips.wordpress.com/2017/03/31/proxy-design-pattern-explained-with-c-sample/)
 
+## Vistor
+[Article](https://www.scaler.com/topics/design-patterns/visitor-design-pattern/)
+
+[Article 2](https://www.modernescpp.com/index.php/the-visitor-pattern/)
+
 # General Resource
 [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
 
