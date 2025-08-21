@@ -36,6 +36,9 @@ For the factor method, there seems to be three ways it is implemented:
 ## Proxy
 [Article](https://cppcodetips.wordpress.com/2017/03/31/proxy-design-pattern-explained-with-c-sample/)
 
+## Mediator
+[Article](https://www.geeksforgeeks.org/system-design/mediator-design-pattern-in-c/)
+
 # General Resource
 [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
 
