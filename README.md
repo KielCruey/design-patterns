@@ -29,6 +29,9 @@ The goal is to have the code:
 ### Memento
 [Article](https://refactoring.guru/design-patterns/memento)
 
+### Mediator
+[Article](https://www.geeksforgeeks.org/system-design/mediator-design-pattern-in-c/)
+
 ### State
 [Article](https://refactoring.guru/design-patterns/state)
 
@@ -77,6 +80,9 @@ The goal is to have the code:
 
 ### Vistor
 [Article](https://www.scaler.com/topics/design-patterns/visitor-design-pattern/)
+
+# General Resource
+[Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
 
 [Article 2](https://www.modernescpp.com/index.php/the-visitor-pattern/)
 
