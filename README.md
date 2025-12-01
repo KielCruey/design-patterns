@@ -75,16 +75,10 @@ The goal is to have the code:
 ### Proxy
 [Article](https://cppcodetips.wordpress.com/2017/03/31/proxy-design-pattern-explained-with-c-sample/)
 
-## Vistor
+### Vistor
 [Article](https://www.scaler.com/topics/design-patterns/visitor-design-pattern/)
 
 [Article 2](https://www.modernescpp.com/index.php/the-visitor-pattern/)
-
-## Vistor
-[Article](https://www.scaler.com/topics/design-patterns/visitor-design-pattern/)
-
-[Article 2](https://www.modernescpp.com/index.php/the-visitor-pattern/)
-
 
 ## General Resource
 Another good [Design Pattern Book](https://www.cs.up.ac.za/cs/lmarshall/TDP/TDP.html)
