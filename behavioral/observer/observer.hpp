@@ -13,7 +13,7 @@ class PublisherManager
 {
 public:
 	PublisherManager();
-	~PublisherManager();
+	virtual ~PublisherManager();
 
 	SubscriptionManager* subManager;
 
@@ -27,7 +27,7 @@ class NewPaperPublisher : public PublisherManager
 {
 public:
 	NewPaperPublisher();
-	~NewPaperPublisher();
+	virtual ~NewPaperPublisher();
 
 	SubscriptionManager* subManager;
 
@@ -40,7 +40,7 @@ class WebsitePublisher : public PublisherManager
 {
 public:
 	WebsitePublisher();
-	~WebsitePublisher();
+	virtual ~WebsitePublisher();
 
 	SubscriptionManager* subManager;
 
