@@ -29,6 +29,10 @@ The goal is to have the code:
 ### Memento
 [Article](https://refactoring.guru/design-patterns/memento)
 
+### Observer
+[Article](https://refactoring.guru/design-patterns/observer)
+[Article #2](https://www.geeksforgeeks.org/system-design/observer-pattern-set-1-introduction/)
+
 ### State
 [Article](https://refactoring.guru/design-patterns/state)
 
