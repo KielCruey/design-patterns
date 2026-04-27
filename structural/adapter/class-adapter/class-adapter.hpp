@@ -4,7 +4,7 @@ enum ShapeType { circle = 0, triangle };
 class AbstractShapes
 {
 public:
-    virtual ~AbstractShapes() = 0;
+    virtual ~AbstractShapes() = default;
     virtual double CalculateArea() = 0;
     virtual double CalculatePerimeter() = 0;
 
@@ -15,18 +15,18 @@ public:
 class Circle : public AbstractShapes
 {
 public:
-    Circle(double radius = 1.0); // assumes unit circle
+    explicit Circle(double radius = 1.0); // assumes unit circle
     ~Circle() override;
-
-    void print() override;
 
     double CalculateArea() override;
     double CalculatePerimeter() override;
 
+    void print() override;
     int GetShapeType() override;
-    double GetArea();
-    double GetPerimeter();
-    double GetRadius();
+
+    double GetArea() const;
+    double GetPerimeter() const;
+    double GetRadius() const;
 
     void SetArea(double area);
     void SetPerimeter(double perimeter);
@@ -41,7 +41,7 @@ private:
 class Triangle : public AbstractShapes
 {
 public:
-    Triangle(double side1 = 1.0, double side2 = 1.0, double angleInDegrees = 90); // assumes unit right triangle
+    explicit Triangle(double side1 = 1.0, double side2 = 1.0, double angleInDegrees = 90); // assumes unit right triangle
     ~Triangle() override;
 
     void print() override;
@@ -50,22 +50,22 @@ public:
     double CalculatePerimeter() override;
     double CalculateHypotenuse();
 
-    double ConvertDegreesToRadians(double degrees);
+    static double ConvertDegreesToRadians(double degrees);
 
-    int GetShapeType() override;
-    double GetSide1();
-    double GetSide2();
-    double GetHypotenuse();
-    double GetAngle();
-    double GetArea();
-    double GetPerimeter();
+    inline int GetShapeType() override;
+    inline double GetSide1();
+    inline double GetSide2();
+    inline double GetHypotenuse();
+    inline double GetAngle();
+    inline double GetArea();
+    inline double GetPerimeter();
 
-    void SetSide1(double side1);
-    void SetSide2(double side2);
-    void SetHypotenuse(double hypotenuse);
-    void SetAngle(double angle);
-    void SetArea(double area);
-    void SetPerimeter(double perimeter);
+    inline void SetSide1(double side1);
+    inline void SetSide2(double side2);
+    inline void SetHypotenuse(double hypotenuse);
+    inline void SetAngle(double angle);
+    inline void SetArea(double area);
+    inline void SetPerimeter(double perimeter);
 
 private:
     // given parameters
@@ -83,10 +83,10 @@ private:
 class ShapeAdapter : public Circle, public Triangle
 {
 public:
-    ShapeAdapter(AbstractShapes * abstractShapes = NULL);
-    ~ShapeAdapter();
+    explicit ShapeAdapter(AbstractShapes * abstractShapes = NULL);
+    ~ShapeAdapter() override;
 
-    Triangle * ConvertCircleToTriangle(Circle * circle);
+    Triangle * ConvertCircleToTriangle(Circle const* circle);
     Circle * ConvertTriangleToCircle(Triangle * triangle);
 
     void SetCircle(Circle * pCircle);
@@ -99,3 +99,5 @@ private:
     Circle * pCircle;
     Triangle * pTriangle;
 };
+
+#include "class-adapter.inl"

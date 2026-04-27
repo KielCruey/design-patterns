@@ -7,14 +7,14 @@ public:
     Waiter();
     ~Waiter();
 
-    void CleansTable();
-    void PlacesUtensils();
-    void GivesMenu();
-    void ReceivesCustomerOrders();
-    void WritesOrder();
-    void SendsOrderToKitchen();
-    void ServesCustomers();
-    void GivesBill();    
+    static void CleansTable();
+    static void PlacesUtensils();
+    static void GivesMenu();
+    static void ReceivesCustomerOrders();
+    static void WritesOrder();
+    static void SendsOrderToKitchen();
+    static void ServesCustomers();
+    static void GivesBill();    
 };
 
 class Chef
@@ -23,24 +23,24 @@ public:
     Chef();
     ~Chef();
 
-    void PreparesFood();
-    void CutsFood();
-    void CooksFood();
-    void PlatesFood();
-    void OrderReady();
-    void WashesDishes();
+    static void PreparesFood();
+    static void CutsFood();
+    static void CooksFood();
+    static void PlatesFood();
+    static void OrderReady();
+    static void WashesDishes();
 };
 
 // =========== Subsystem(s) ===========
 class FrontOfHouse
 {   
 public:
-    FrontOfHouse(Waiter * waiter = nullptr);
+    explicit FrontOfHouse(Waiter * waiter = nullptr);
     ~FrontOfHouse();
 
-    void WritesReserveTime();
-    void SeatsGuests(int number);
-    void ReceivesBill();
+    static void WritesReserveTime();
+    static void SeatsGuests(int number);
+    static void ReceivesBill();
 
     // ------ getters/setters ------
     inline Waiter* GetWaiter() const;
@@ -53,7 +53,7 @@ private:
 class BackOfHouse
 {
 public:
-    BackOfHouse(Chef * chef = nullptr);
+    explicit BackOfHouse(Chef * chef = nullptr);
     ~BackOfHouse();
 
     void ReceivesOrder();
@@ -70,19 +70,19 @@ private:
 class Customer
 {
 public:
-    Customer();
+    explicit Customer();
     ~Customer();
 
-    void CallsForReservation();
-    void EntersRestaurant();
-    void GoesToTable();
-    void PlacesFoodOrder();
-    void StartsEating();
-    void FinishesEating();
-    void PaysBill();
-    void LeavesTable();
-    void LeavesRestaurant();
-    void RatesRestaurantReview();
+    static void CallsForReservation();
+    static void EntersRestaurant();
+    static void GoesToTable();
+    static void PlacesFoodOrder();
+    static void StartsEating();
+    static void FinishesEating();
+    static void PaysBill();
+    static void LeavesTable();
+    static void LeavesRestaurant();
+    static void RatesRestaurantReview();
 };
 
 // =========== Facade ===========
@@ -91,7 +91,7 @@ public:
 class RestaurantFacade
 {
 public:
-    RestaurantFacade(FrontOfHouse * frontOfHouse = nullptr,
+    explicit RestaurantFacade(FrontOfHouse * frontOfHouse = nullptr,
                      BackOfHouse * backOfHouse = nullptr);
     ~RestaurantFacade();
 
@@ -111,10 +111,6 @@ public:
     inline FrontOfHouse* GetFrontOfHouse() const;
     inline BackOfHouse* GetBackOfHouse() const;
     inline std::queue<Customer*> GetCustomerQueue() const;
-
-    inline void SetFrontOfHouse(FrontOfHouse* frontOfHouse);
-    inline void SetBackOfHouse(BackOfHouse* backOfHouse);
-    inline void SetCustomerQueue(std::queue<Customer*> customerQueue);
 
 protected:
     FrontOfHouse * frontOfHouse;

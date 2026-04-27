@@ -16,7 +16,7 @@ void RobotPrototype::PrintInfo() {
 }
 
 // ============== ConcreteCivilianRobotPrototype ==============
-ConcreteCivilianRobotPrototype::ConcreteCivilianRobotPrototype(int serialNumber, std::string name) :
+ConcreteCivilianRobotPrototype::ConcreteCivilianRobotPrototype(int serialNumber, const std::string& name) :
     RobotPrototype(serialNumber), 
     name(name)
 {
@@ -36,7 +36,7 @@ RobotPrototype * ConcreteCivilianRobotPrototype::Clone() const {
 }
 
 // ============== ConcreteMilitaryRobotPrototype ==============
-ConcreteMilitaryRobotPrototype::ConcreteMilitaryRobotPrototype(int serialNumber, std::string rank) :
+ConcreteMilitaryRobotPrototype::ConcreteMilitaryRobotPrototype(int serialNumber, const std::string& rank) :
     RobotPrototype(serialNumber),
     rank(rank)
 {
@@ -73,7 +73,7 @@ RobotPrototype * PrototypeFactory::CreatePrototype(RobotTypes rType) {
 }
 
 // ============== Client Code ==============
-static RobotPrototype * CloneAndPrintMilitaryRobot(ConcreteMilitaryRobotPrototype * mRobot) {
+static RobotPrototype * CloneAndPrintMilitaryRobot(ConcreteMilitaryRobotPrototype const* mRobot) {
     // cloning miliary robot
     RobotPrototype * protoMilitary = mRobot->Clone();
     // printing out member variables
@@ -82,13 +82,13 @@ static RobotPrototype * CloneAndPrintMilitaryRobot(ConcreteMilitaryRobotPrototyp
     return protoMilitary;
 }
 
-static RobotPrototype * CloneAndPrintCivilianRobot(ConcreteCivilianRobotPrototype * cRobot) {
+static RobotPrototype * CloneAndPrintCivilianRobot(ConcreteCivilianRobotPrototype const* cRobot) {
     // cloning civilian robot
     RobotPrototype * protoCivilian = cRobot->Clone();
     // printing out member variables
-    cRobot->PrintInfo();
+    protoCivilian->PrintInfo();
 
-    return cRobot;
+    return protoCivilian;
 }
 
 static void SimpleMiliaryClone() {
@@ -96,7 +96,8 @@ static void SimpleMiliaryClone() {
     mRobot->PrintInfo();
 
     // cloning
-    RobotPrototype * milRobot = CloneAndPrintMilitaryRobot(mRobot);
+    RobotPrototype const* milRobot = CloneAndPrintMilitaryRobot(mRobot);
+	const_cast<RobotPrototype*>(milRobot)->PrintInfo();
 }
 
 static void SimpleCivilianClone() {
@@ -104,7 +105,8 @@ static void SimpleCivilianClone() {
     cRobot->PrintInfo();
 
     // cloning
-    RobotPrototype * civRobot = CloneAndPrintCivilianRobot(cRobot);
+    RobotPrototype const* civRobot = CloneAndPrintCivilianRobot(cRobot);
+    const_cast<RobotPrototype*>(civRobot)->PrintInfo();
 }
 
 static void CheckRobotType(RobotPrototype * r) {

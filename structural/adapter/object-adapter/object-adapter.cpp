@@ -17,22 +17,6 @@ Outlet::~Outlet() {
     std::cout << "Outlet deleted" << std::endl;
 }
 
-bool Outlet::GetHasRoundHoles() const {
-    return this->HasRoundHoles;
-}
-
-int Outlet::GetNumberOfHoles() const {
-    return this->NumberOfHoles;
-}
-
-int Outlet::GetFrequencyRating() const {
-    return this->FrequencyRating;
-}
-
-int Outlet::GetVoltageRating() const {
-    return this->VoltageRating;
-}
-
 // =========== AmericanOutlet ===========
 AmericanOutlet::AmericanOutlet(int VoltageRating, 
                                 int FrequencyRating, 
@@ -92,22 +76,6 @@ Plug::~Plug() {
     std::cout << "Plug deleted" << std::endl;
 }
 
-bool Plug::GetHasRoundPins() const {
-    return this->HasRoundPins;
-}
-
-int Plug::GetPinCount() const {
-    return this->PinCount;
-}
-
-int Plug::GetVoltageRating() const {
-    return this->VoltageRating;
-}
-
-int Plug::GetFrequencyRating() const {
-    return this->FrequencyRating;
-}
-
 // =========== AmericanPlug ===========
 AmericanPlug::AmericanPlug(int VoltageRating, 
                            int FrequencyRating, 
@@ -162,7 +130,7 @@ Adapter::~Adapter() {
     std::cout << "Adapter deleted" << std::endl;
 }
 
-bool Adapter::CheckNeedsAdapter(Outlet * pOutlet) {
+bool Adapter::CheckNeedsAdapter(Outlet const* pOutlet) {
     if(CheckOutletCompatibility(pOutlet)) {
         std::cout << "No Adapter Needed!" << std::endl;
         return false;
@@ -173,7 +141,7 @@ bool Adapter::CheckNeedsAdapter(Outlet * pOutlet) {
     }
 }
 
-bool Adapter::CheckOutletCompatibility(Outlet * pOutlet) {
+bool Adapter::CheckOutletCompatibility(Outlet const* pOutlet) {
     // logic -- checking plug and outlet needs an adapter
     if(GetPlug()->GetHasRoundPins() == pOutlet->GetHasRoundHoles()
         && GetPlug()->GetPinCount() <= pOutlet->GetNumberOfHoles()
@@ -184,10 +152,6 @@ bool Adapter::CheckOutletCompatibility(Outlet * pOutlet) {
     }
     else
         return false;
-}
-
-void Adapter::SetPlug(Plug * pPlug) {
-    this->pPlug = pPlug;
 }
 
 Plug * Adapter::GetPlug() {

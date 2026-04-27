@@ -3,7 +3,7 @@
 
 #include "state.hpp"
 
-void printToConsole(std::string toConsole) {
+void printToConsole(const std::string& toConsole) {
 	std::cout << toConsole << std::endl;
 }
 
@@ -22,6 +22,16 @@ Boss::Boss(Mood * mood) :
 
 Boss::~Boss() {
 	delete mood;
+}
+
+Boss::Boss(const Boss& boss) 
+	: mood(boss.mood)
+{ }
+
+Boss& Boss::operator=(const Boss& boss) {
+	if(boss.mood != nullptr) this->mood = boss.mood;
+
+	return *this;
 }
 
 void Boss::helpMe() {

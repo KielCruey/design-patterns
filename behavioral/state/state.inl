@@ -6,8 +6,3 @@ inline Mood * Boss::getMood() {
 inline void Boss::setMood(Mood * mood) {
 	this->mood = mood;
 }
-
-// ======== Mood ========
-void Mood::setBoss(Boss * boss) {
-	this->boss = boss;
-}

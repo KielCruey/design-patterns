@@ -22,8 +22,6 @@ public:
     virtual void Reload() = 0;
     
     // getters/setters
-    inline int GetHealth() const;
-    inline int GetMana() const;
     inline int GetFatigue() const;
     void SetHealth(int health);
     void SetMana(int mana);
@@ -39,10 +37,10 @@ private:
 class Knight : public Entity
 {
 public:
-    Knight(int health = 100, 
+    explicit Knight(int health = 100, 
            int mana = 100,
            int fatigue = 100);
-    ~Knight();
+    ~Knight() override;
 
     // virtuals
     void EquipArmor() override;
@@ -60,11 +58,11 @@ public:
 class Archer : public Entity
 {
 public:
-    Archer(int arrowsEquip = 100, 
+    explicit Archer(int arrowsEquip = 100, 
            int health = 100, 
            int mana = 100, 
            int fatigue = 100);
-    ~Archer();
+    ~Archer() override;
 
     // virtuals
     void EquipArmor() override;
@@ -90,8 +88,8 @@ private:
 class EntitySpecialization : public Entity
 {
 public:
-    EntitySpecialization(Entity * entity);
-    ~EntitySpecialization();
+    explicit EntitySpecialization(Entity * entity);
+    ~EntitySpecialization() override;
 
     // virtuals
     virtual void ClassAttack() = 0;
@@ -108,9 +106,9 @@ protected:
 class HolyKnight : public EntitySpecialization
 {
 public:
-    HolyKnight(Entity * entity = nullptr, 
+    explicit HolyKnight(Entity * entity = nullptr,
                int faithMagic = 100);
-    ~HolyKnight();
+    ~HolyKnight() override;
 
     // from 'entity specialization' class
     void ClassAttack() override;
@@ -139,9 +137,9 @@ private:
 class DarkKnight : public EntitySpecialization
 {
 public:
-    DarkKnight(Entity* entity = nullptr, 
+    explicit DarkKnight(Entity* entity = nullptr,
                int darkMagic = 100);
-    ~DarkKnight();
+    ~DarkKnight() override;
 
     // from 'entity specialization' class
     void ClassAttack() override;
@@ -170,9 +168,9 @@ private:
 class CrossBowArcher : public EntitySpecialization
 {
 public:
-    CrossBowArcher(Entity * entity = nullptr, 
+    explicit CrossBowArcher(Entity * entity = nullptr,
                    int finessePoints = 100);
-    ~CrossBowArcher();
+    ~CrossBowArcher() override;
 
     // from 'entity specialization' class
     void ClassAttack() override;

@@ -16,17 +16,31 @@ std::vector<int>* DecreasingSort::doAlgorithm(std::vector<int>* data) {
 }
 
 // ========== Context ==========
+Data::Data(std::vector<int>* data)
+	: data(data)
+{
+	this->strategy = nullptr;
+}
+
 Data::Data(std::unique_ptr<iAlgorithmStrategy>&& strategy)
 {
+	this->data = new std::vector<int>();
 	this->strategy = std::move(strategy);
 }
 
-void Data::setStrategy(std::unique_ptr<iAlgorithmStrategy>&& strategy) {
-	this->strategy = std::move(strategy);
+Data::~Data() {
+	delete data;
 }
 
-void Data::setVector(std::vector<int>*data) {
-	this->data = data;
+Data::Data(Data& rhs)
+	: strategy(std::move(rhs.strategy)), data(rhs.data)
+{ }
+
+Data& Data::operator=(Data& rhs) {
+	this->data = rhs.data;
+	this->strategy = std::move(rhs.strategy);
+
+	return *this;
 }
 
 void Data::doAlgorithm(std::vector<int>* data) {

@@ -1,12 +1,3 @@
-// ========= Base Handler =========
-inline void BaseHandler::setHandler(Handler* nextHandler) {
-    this->nextHandler = nextHandler;
-}
-
-inline Handler* BaseHandler::getHandler() const {
-    return this->nextHandler;
-}
-
 // =========== RobotBodyHandler ===========
 inline void RobotBodyHandler::setHasRobotChest(bool hasRobotChest) {
     this->hasRobotChest = hasRobotChest;

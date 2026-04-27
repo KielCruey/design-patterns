@@ -1,7 +1,7 @@
 #include "command.hpp"
 
 // ============ Static Functions ============
-static void printToConsole(std::string string) {
+static void printToConsole(const std::string& string) {
 	std::cout << string << std::endl;
 }
 

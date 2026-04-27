@@ -10,9 +10,7 @@ public:
 
     ~Movie();
 
-    inline void SetName(std::string name);
     inline void SetCurrentDuration(double currentDuration);
-    inline void SetTotalDuration(double totalDuration);
 
     inline std::string GetName() const;
     inline double GetCurrentDuration() const;
@@ -49,7 +47,7 @@ public:
 class TVDevice : public Device
 {
 public:
-    TVDevice(Movie * movie = nullptr,
+    explicit TVDevice(Movie * movie = nullptr,
             bool isPlaying = 0,
             bool isMuted = 1, 
             bool isPowered = 0, 
@@ -58,7 +56,6 @@ public:
             
     ~TVDevice() override;   
 
-    inline void SetMovie(Movie * movie);
     inline void SetIsPlaying(bool isPlaying);
 
     inline Movie * GetMovie() const;
@@ -88,7 +85,7 @@ private:
 class RadioDevice : public Device
 {
 public:
-    RadioDevice(bool isMuted = 1,
+    explicit RadioDevice(bool isMuted = 1,
                 bool isPowered = 0,
                 int volume = 1,
                  int channel = 1);
@@ -118,7 +115,7 @@ private:
 class Remote
 {
 public:
-    Remote(Device * device);
+    explicit Remote(Device * device);
     virtual ~Remote();
 
     virtual bool TogglePower(Device * device);
@@ -129,7 +126,6 @@ public:
     virtual int ChannelDown(Device * device);
 
     inline Device * GetDevice() const;
-    inline void SetDevice(Device * device);
 
 // device needs to be accessible to the derived classes -- used protected
 protected:
@@ -141,15 +137,8 @@ protected:
 class TVRemote : public Remote
 {
 public:
-    TVRemote(Device * device);
-    virtual ~TVRemote();
-
-    virtual bool TogglePower(Device * device) override;
-    virtual bool ToggleMute(Device * device) override;
-    virtual int VolumeUp(Device * device) override;
-    virtual int VolumeDown(Device * device) override;
-    virtual int ChannelUp(Device * device) override;
-    virtual int ChannelDown(Device * device) override;
+    explicit TVRemote(Device * device);
+    virtual ~TVRemote() override;
 
     // tv only features
     bool TogglePlay(Device * device);

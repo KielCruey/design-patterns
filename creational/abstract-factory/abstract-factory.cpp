@@ -94,30 +94,44 @@ AbstractPerson * ConcreteOrcFactory::MakeCalvary() {
 }
 
 // ============ CLIENT CODE ============ 
-void CreateHumanArmy(AbstractRaceFactory * factory)
-{
-    AbstractPerson * humanSoldier = factory->MakeSoldier(); 
-    AbstractPerson * humanArcher = factory->MakeArcher();
-    AbstractPerson * humanCalvary = factory->MakeCalvary();
+void CreateHumanArmy(AbstractRaceFactory * factory) {
+    AbstractPerson* humanSoldier = factory->MakeSoldier();
+	humanSoldier->Attack();
+	humanSoldier->CheckHealth();
+
+    AbstractPerson* humanArcher = factory->MakeArcher();
+    humanArcher->Attack();
+	humanArcher->CheckHealth();
+
+    AbstractPerson* humanCalvary = factory->MakeCalvary();
+    humanCalvary->Attack();
+	humanCalvary->CheckHealth();
 }
 
-void CreateOrcArmy(AbstractRaceFactory * factory)
-{
-    AbstractPerson * orcSoldier = factory->MakeSoldier(); 
-    AbstractPerson * orcArcher = factory->MakeArcher();
-    AbstractPerson * orcCalvary = factory->MakeCalvary();
+void CreateOrcArmy(AbstractRaceFactory * factory) {
+    AbstractPerson* orcSoldier = factory->MakeSoldier(); 
+    orcSoldier->Attack();
+    orcSoldier->CheckHealth();
+
+    AbstractPerson* orcArcher = factory->MakeArcher();
+    orcArcher->Attack();
+    orcArcher->CheckHealth();
+
+    AbstractPerson* orcCalvary = factory->MakeCalvary();
+    orcCalvary->Attack();
+    orcCalvary->CheckHealth();
 }
 
 // ============ MAIN ============
-int main()
-{
+int main() {
     // factory creating humans
     ConcreteHumanFactory * humanFactory = new ConcreteHumanFactory();
     CreateHumanArmy(humanFactory);
-    delete humanFactory;
-
+    
     // factory creating orcs
     ConcreteOrcFactory * orcFactory = new ConcreteOrcFactory();
-    CreateHumanArmy(orcFactory);
+    CreateOrcArmy(orcFactory);
+
+    delete humanFactory;
     delete orcFactory;
 }

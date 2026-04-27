@@ -1,20 +1,4 @@
 // ========== Extras ========== 
-inline int Extras::getSugarShot() const {
-	return this->sugarShot;
-}
-
-inline int Extras::getCreamShot() const {
-	return this->creamShot;
-}
-
-inline int Extras::getMilkShot() const {
-	return this->milkShot;
-}
-
-inline int Extras::getChocolateShot() const {
-	return this->chocolateShot;
-}
-
 inline void Extras::setSugarShot(int sugarShot) {
 	this->sugarShot = sugarShot;
 }
@@ -100,18 +84,6 @@ inline int BeverageMaker::getCups() const {
 
 inline double BeverageMaker::getWaterAmount() const {
 	return this->waterAmount;
-}
-
-inline void BeverageMaker::setExtras(Extras* extras) {
-	this->extras = extras;
-}
-
-inline void BeverageMaker::setTeas(Teas* teas) {
-	this->teas = teas;
-}
-
-inline void BeverageMaker::setCoffees(Coffees* coffees) {
-	this->coffees = coffees;
 }
 
 inline void BeverageMaker::setCups(int cups) {

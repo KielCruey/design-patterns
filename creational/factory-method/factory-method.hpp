@@ -13,56 +13,53 @@ public:
 // ============ Concrete Products ============
 class Cow : public AbstractAnimal
 {
-private:
-    std::string name;
-
 public:
     Cow();
-    Cow(std::string name);
-    ~Cow();
+    explicit Cow(const std::string& name);
+    ~Cow() override;
 
     std::string SoundsOfYourPeople() override;
     void Sleeps() override;
     void Eats () override;
 
-    std::string GetName() const;
-    void SetName(std::string name);
+    inline std::string GetName() const;
+
+private:
+    std::string name;
 };
 
 class Sheep : public AbstractAnimal
 {
-private:
-    std::string name;
-
 public:
     Sheep();
-    Sheep(std::string name);
-    ~Sheep();
+    explicit Sheep(const std::string& name);
+    ~Sheep() override;
 
     std::string SoundsOfYourPeople() override;
     void Sleeps() override;
     void Eats () override;
 
-    std::string GetName() const;
-    void SetName(std::string name);
+    inline std::string GetName() const;
+
+private:
+    std::string name;
 };
 
 class Pig : public AbstractAnimal
 {
-private:
-    std::string name;
-
 public:
     Pig();
-    Pig(std::string name);
-    ~Pig();
+    explicit Pig(const std::string& name);
+    ~Pig() override;
 
     std::string SoundsOfYourPeople() override;
     void Sleeps() override;
     void Eats () override;
 
-    std::string GetName() const;
-    void SetName(std::string name);
+    inline std::string GetName() const;
+
+private:
+    std::string name;
 };
 
 // ============ Creator ============
@@ -74,13 +71,13 @@ public:
     virtual ~AnimalCreator();
 
     // virtual functions that must be override by derived class
-    virtual AbstractAnimal * FactoryMethod() = 0;
-    virtual AbstractAnimal * FactoryMethod(std::string name) = 0;
+    virtual AbstractAnimal* FactoryMethod() = 0;
+    virtual AbstractAnimal* FactoryMethod(std::string name) = 0;
 
     // non-virtual function to call the virtual FactoryMethod(), which will be overwritten by the subclass "products"
     // the subclasses will use the new keyword to create their own object
-    AbstractAnimal * CreateAnimal();
-    AbstractAnimal * CreateAnimal(std::string name);
+    AbstractAnimal* CreateAnimal();
+    AbstractAnimal* CreateAnimal(const std::string& name);
 };
 
 // ============ Concrete Creators ============
@@ -91,8 +88,8 @@ class ConcreteCowCreator : public AnimalCreator
 public: 
     ~ConcreteCowCreator() override;
 
-    AbstractAnimal * FactoryMethod() override;
-    AbstractAnimal * FactoryMethod(std::string name) override;
+    AbstractAnimal* FactoryMethod() override;
+    AbstractAnimal* FactoryMethod(std::string name) override;
 };
 
 class ConcreteSheepCreator : public AnimalCreator
@@ -100,8 +97,8 @@ class ConcreteSheepCreator : public AnimalCreator
 public: 
     ~ConcreteSheepCreator() override;
 
-    AbstractAnimal * FactoryMethod() override;
-    AbstractAnimal * FactoryMethod(std::string name) override;
+    AbstractAnimal* FactoryMethod() override;
+    AbstractAnimal* FactoryMethod(std::string name) override;
 };
 
 class ConcretePigCreator : public AnimalCreator
@@ -110,5 +107,7 @@ public:
     ~ConcretePigCreator() override;
 
     AbstractAnimal* FactoryMethod() override;
-    AbstractAnimal * FactoryMethod(std::string name) override;
+    AbstractAnimal* FactoryMethod(std::string name) override;
 };
+
+#include "factory-method.inl"

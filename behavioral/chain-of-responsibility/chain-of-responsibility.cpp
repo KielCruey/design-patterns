@@ -120,7 +120,7 @@ void HandleTheChain(Handler & handler) {
                                                      "Right Arm", "Left Arm", "Right Leg", "Left Leg",
                                                      "Cranium" };
 
-    for (auto& i : assemblyInstructions) {
+    for (const auto& i : assemblyInstructions) {
         auto assemblyResults = handler.Handle(i);
         std::cout << assemblyResults << std::endl;
     }

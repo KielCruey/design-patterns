@@ -7,17 +7,17 @@
 class ComputerComponent
 {
 public:
-    ComputerComponent(ComputerComponent * parent = nullptr);
+    explicit ComputerComponent(ComputerComponent * parent = nullptr);
     ~ComputerComponent();
     
-    ComputerComponent * GetParent() const;
-    void SetParent(ComputerComponent * parent);
+    inline ComputerComponent * GetParent() const;
+    inline void SetParent(ComputerComponent * parent);
 
     // ------ virtuals ------
-    virtual void Add(ComputerComponent * computerComponent) {};
-    virtual void Remove(ComputerComponent * computerComponent) {};
-    virtual bool IsComposite();
-    virtual void Print();
+    virtual void Add(ComputerComponent * computerComponent) = 0;
+    virtual void Remove(ComputerComponent * computerComponent) = 0;
+    virtual bool IsComposite() = 0;
+    virtual void Print() = 0;
 
 protected:
     ComputerComponent * parent;
@@ -27,36 +27,34 @@ protected:
 class Part : public ComputerComponent
 {
 public:
-    Part(std::string brandName = "N/A", std::string modelName = "N/A");
+    explicit Part(std::string& brandName, 
+       std::string& modelName);
     ~Part();
 
-    std::string GetBrandName() const;
-    std::string GetModelName() const;
-    void SetBrandName(std::string brandName);
-    void SetModelName(std::string modelName);
+    inline std::string GetBrandName() const;
+    inline std::string GetModelName() const;
 
     // ------ virtuals ------
-    virtual void Add(ComputerComponent * computerComponent) {};
-    virtual void Remove(ComputerComponent * computerComponent) {};
-    virtual bool IsComposite() override;
-    virtual void Print() override;
+    virtual void Add(ComputerComponent * computerComponent) override;
+    virtual void Remove(ComputerComponent * computerComponent) override;
+    virtual bool IsComposite() override = 0;
+    virtual void Print() override = 0;
 
 private:
-    std::string brandName;
-    std::string modelName;
+    std::string& brandName;
+    std::string& modelName;
 };
 
 // ============= Concrete Leaves =============
 class Mouse : public Part
 {
 public:
-    Mouse(int dpi = 1000, 
-            std::string brandName = "N/A", 
-            std::string modelName = "N/A");
+    explicit Mouse(std::string& brandName, 
+        std::string& modelName,
+        int dpi = 1000);
     ~Mouse();
 
-    int GetDPI() const;
-    void SetDPI(int dpi);
+    inline int GetDPI() const;
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -69,13 +67,10 @@ private:
 class Keyboard : public Part
 {
 public:
-    Keyboard(bool hasClickyKeys = false, 
-                std::string brandName = "N/A", 
-                std::string modelName = "N/A");
+    explicit Keyboard(bool hasClickyKeys = false, std::string brandName = "N/A", std::string modelName = "N/A");
     ~Keyboard();
 
-    bool GetHasClickyKeys() const;
-    void SetHasClickyKeys(bool HasClickyKeys);
+    inline bool GetHasClickyKeys() const;
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -88,17 +83,13 @@ private:
 class Monitor : public Part
 {
 public:
-    Monitor(double length = 0.0, 
-            double width = 0.0,
-            std::string brandName = "N/A",
-            std::string modelName = "N/A");
+    explicit Monitor(double length = 0.0, double width = 0.0,
+            std::string brandName = "N/A", std::string modelName = "N/A");
 
     ~Monitor();
 
-    double GetLength() const;
-    double GetWidth() const;
-    void SetLength(double length);
-    void SetWidth(double width);
+    inline double GetLength() const;
+    inline double GetWidth() const;
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -112,16 +103,13 @@ private:
 class Speakers : public Part
 {
 public:
-    Speakers(bool isPowered = false, 
-                int volume = 0.0,
-                std::string brandName = "N/A",
-                std::string modelName = "N/A");
+    explicit Speakers(bool isPowered = false, int volume = 0.0,
+                std::string brandName = "N/A", std::string modelName = "N/A");
     ~Speakers(); 
 
-    bool GetIsPowered() const;
-    int GetVolume() const;
-    void SetIsPowered(bool isPowered);
-    void SetVolume(int volume);
+    inline bool GetIsPowered() const;
+    inline int GetVolume() const;
+    inline void SetVolume(int volume);
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -135,16 +123,12 @@ private:
 class SSD : public Part
 {
 public:
-    SSD(double currentStorage = 0, 
-        double totalStorage = 0,
-        std::string brandName = "N/A",
-        std::string modelName = "N/A");
+    explicit SSD(double currentStorage = 0, double totalStorage = 0,
+        std::string brandName = "N/A", std::string modelName = "N/A");
     ~SSD(); 
 
-    double GetCurrentStorage() const;
-    double GetTotalStorage() const;
-    void SetCurrentStorage(double currentStorage);
-    void SetTotalStorage(double totalStorage);
+    inline double GetCurrentStorage() const;
+    inline double GetTotalStorage() const;
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -158,13 +142,12 @@ private:
 class RAM : public Part
 {
 public:
-    RAM(double capacity = 0,
+    explicit RAM(double capacity = 0,
         std::string brandName = "N/A",
         std::string modelName = "N/A");   // in GB
     ~RAM(); 
 
-    double GetCapacity() const;
-    void SetCapacity(double capacity);
+    inline double GetCapacity() const;
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -177,13 +160,12 @@ private:
 class CPU : public Part
 {
 public:
-    CPU(int cores = 0,
+    explicit CPU(int cores = 0,
         std::string brandName = "N/A",
         std::string modelName = "N/A");
     ~CPU(); 
 
-    int GetCores() const;
-    void SetCores(int cores);
+    inline int GetCores() const;
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -196,13 +178,12 @@ private:
 class GPU : public Part
 {
 public:
-    GPU(double memory = 0,
+    explicit GPU(double memory = 0,
         std::string brandName = "N/A",
         std::string modelName = "N/A");
     ~GPU();
 
-    double GetMemory() const;
-    void SetMemory(double memory);
+    inline double GetMemory() const;
 
     // ------ virtuals ------
     bool IsComposite() override;
@@ -216,20 +197,20 @@ private:
 // The Composite class represents the complex components that may have children.
 class Computer : public ComputerComponent
 {
-protected: 
-    std::list<ComputerComponent *> children;
-
 public: 
     Computer();
     ~Computer();
 
-    std::list<ComputerComponent *> GetChilden() const;
+    inline std::list<ComputerComponent *> GetChilden() const;
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
     void Remove(ComputerComponent * computerComponent) override;
     bool IsComposite() override;
     void Print() override;
+
+protected:
+    std::list<ComputerComponent*> children;
 };
 
 class Peripherals : public ComputerComponent
@@ -241,7 +222,7 @@ public:
     Peripherals();
     ~Peripherals();
 
-    std::list<ComputerComponent*> GetChilden() const;
+    inline std::list<ComputerComponent*> GetChilden() const;
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
@@ -259,7 +240,7 @@ public:
     Tower();
     ~Tower();
 
-    std::list<ComputerComponent*> GetChilden() const;
+    inline std::list<ComputerComponent*> GetChilden() const;
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
@@ -277,7 +258,7 @@ public:
     Motherboard();
     ~Motherboard();
 
-    std::list<ComputerComponent*> GetChilden() const;
+    inline std::list<ComputerComponent*> GetChilden() const;
 
     // ------ virtuals ------
     void Add(ComputerComponent * computerComponent) override;
@@ -285,3 +266,5 @@ public:
     bool IsComposite() override;
     void Print() override;
 };
+
+#include "composite.inl"

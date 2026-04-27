@@ -25,16 +25,20 @@ public:
 	std::vector<int>* doAlgorithm(std::vector<int>* data) override;
 };
 
-// ========== Context ==========
 class Data
 {
 public:
-	Data() = default;
-	Data(std::unique_ptr<iAlgorithmStrategy>&& strategy); // move constructor -- for ownership
-	
-	void setStrategy(std::unique_ptr<iAlgorithmStrategy>&& strategy);
-	void setVector(std::vector<int>* data);
+	explicit Data(std::vector<int>* data = nullptr);
+	explicit Data(std::unique_ptr<iAlgorithmStrategy>&& strategy);
+	~Data();
+
+	Data(Data& data); // copy constructor
+	Data& operator= (Data& data); // copy assignment
+
 	void doAlgorithm(std::vector<int>* data);
+
+	inline void setStrategy(std::unique_ptr<iAlgorithmStrategy>&& strategy);
+	inline void setVector(std::vector<int>* data);
 
 	std::vector<int>* sort();
 
@@ -43,5 +47,4 @@ private:
 	std::vector<int>* data;
 };
 
-// ========== Concrete Strategies ==========
-#include "strategy.inl"
+#include "stragey.inl"

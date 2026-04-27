@@ -12,16 +12,16 @@ const int UK_HERTS = 50;
 class Outlet
 {
 public:
-    Outlet(bool RoundHoles = NULL, 
+    explicit Outlet(bool RoundHoles = NULL, 
            int NumberOfHoles = NULL,
            int VoltageRating = NULL,
            int FrequencyRating = NULL);
     virtual ~Outlet();
 
-    bool GetHasRoundHoles() const;
-    int GetNumberOfHoles() const;
-    int GetVoltageRating() const;
-    int GetFrequencyRating() const;
+    inline bool GetHasRoundHoles() const;
+    inline int GetNumberOfHoles() const;
+    inline int GetVoltageRating() const;
+    inline int GetFrequencyRating() const;
 
 private:
     bool HasRoundHoles;
@@ -36,11 +36,11 @@ class AmericanOutlet : public Outlet
 public:
     enum AmericanVoltage { Residential = 120, Commercial = 240 };
 
-    AmericanOutlet(int VoltageRating = AmericanVoltage::Residential, 
+    explicit AmericanOutlet(int VoltageRating = AmericanVoltage::Residential,
                     int FrequencyRating = AMERICAN_HERTS,
                     bool HasRoundHoles = HasRoundPinholes::False,
                     int NumberOfHoles = NumberOfPinholes::Two);
-    ~AmericanOutlet();
+    ~AmericanOutlet() override;
 };
 
 class UKOutlet : public Outlet
@@ -48,37 +48,37 @@ class UKOutlet : public Outlet
 public:
     enum UKVoltage { Residential = 230, Commercial = 415 };
 
-    UKOutlet(int VoltageRating = UKVoltage::Residential, 
+    explicit UKOutlet(int VoltageRating = UKVoltage::Residential,
                 int FrequencyRating = UK_HERTS,
                 bool HasRoundHoles = HasRoundPinholes::False,
                 int NumberOfHoles = NumberOfPinholes::Three);
-    ~UKOutlet();
+    ~UKOutlet() override;
 };
 
 class JapaneseOutlet : public Outlet
 {
 public:
-    JapaneseOutlet(int VoltageRating = JapaneseVoltage::Residential, 
+    explicit JapaneseOutlet(int VoltageRating = JapaneseVoltage::Residential,
                     int FrequencyRating = JapaneseHerts::Eastern,
                     bool HasRoundHoles = HasRoundPinholes::True,
                     int NumberOfHoles = NumberOfPinholes::Two);
-    ~JapaneseOutlet();
+    ~JapaneseOutlet() override;
 };
 
 // =========== Abstract Adaptee ===========
 class Plug
 {
 public:
-    Plug(int PinCount = NULL, 
+    explicit Plug(int PinCount = NULL,
         bool HasRoundPins = NULL,
         int VoltageRating = NULL,
         int FrequencyRating = NULL);
     virtual ~Plug();
 
-    bool GetHasRoundPins() const;
-    int GetPinCount() const;
-    int GetVoltageRating() const;
-    int GetFrequencyRating() const;
+    inline bool GetHasRoundPins() const;
+    inline int GetPinCount() const;
+    inline int GetVoltageRating() const;
+    inline int GetFrequencyRating() const;
 
 private:
     bool HasRoundPins;
@@ -92,7 +92,7 @@ class AmericanPlug : public Plug
 public:
     enum AmericanVoltage { Residential = 120, Commercial = 240 };
 
-    AmericanPlug(int VoltageRating = AmericanVoltage::Residential,
+    explicit AmericanPlug(int VoltageRating = AmericanVoltage::Residential,
                  int FrequencyRating = AMERICAN_HERTS,
                  int PinCount = NumberOfPinholes::Two, 
                  bool HasRoundPins = HasRoundPinholes::False);
@@ -104,7 +104,7 @@ class UKPlug : public Plug
 public:
     enum UKVoltage { Residential = 230, Commercial = 415 };
 
-    UKPlug(int VoltageRating = UKVoltage::Residential, 
+    explicit UKPlug(int VoltageRating = UKVoltage::Residential, 
            int FrequencyRating = UK_HERTS,
            int PinCount = NumberOfPinholes::Three, 
            bool HasRoundPins = HasRoundPinholes::False);
@@ -114,7 +114,7 @@ public:
 class JapanesePlug : public Plug
 {
 public:
-    JapanesePlug(int VoltageRating =  JapaneseVoltage::Residential, 
+    explicit JapanesePlug(int VoltageRating =  JapaneseVoltage::Residential,
                  int FrequencyRating = JapaneseHerts::Eastern, 
                  int PinCount =  NumberOfPinholes::Two, 
                  bool HasRoundPins = HasRoundPinholes::True);
@@ -125,15 +125,16 @@ public:
 class Adapter : public Outlet
 {
 public:
-    Adapter(Plug * pPlug = nullptr, Outlet * pOutlet = nullptr);
-    ~Adapter();
+    explicit Adapter(Plug * pPlug = nullptr, Outlet * pOutlet = nullptr);
+    ~Adapter() override;
 
-    bool CheckNeedsAdapter(Outlet * pOutlet); // determines if an adapter is needed
-    bool CheckOutletCompatibility(Outlet * pOutlet); // logic -- plug/outlet needs an adapter
+    bool CheckNeedsAdapter(Outlet const* pOutlet); // determines if an adapter is needed
+    bool CheckOutletCompatibility(Outlet const* pOutlet); // logic -- plug/outlet needs an adapter
 
-    void SetPlug(Plug * pPlug);
     Plug * GetPlug();
 
 private:
     Plug * pPlug;
 };
+
+#include "object-adapter.inl"

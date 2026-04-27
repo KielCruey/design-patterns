@@ -5,14 +5,12 @@
 class Car
 {
 public:
-    Car(std::string make = "N/A", std::string model = "N/A");
+    explicit Car(const std::string& make = "N/A", const std::string& model = "N/A");
     ~Car();
 
     void printMake() const;
     void printModel() const;
 
-    inline void SetMake(std::string make);
-    inline void SetModel(std::string model);
     inline std::string GetMake() const;
     inline std::string GetModel() const;
 
@@ -35,30 +33,32 @@ public:
 class ConcreteCarBuilder : public CarBuilder
 {
 public:
-    ConcreteCarBuilder(std::string make = "N/A", std::string model = "N/A");
-    ~ConcreteCarBuilder();
+    explicit ConcreteCarBuilder(const std::string& make = "N/A", const std::string& model = "N/A");
+    ~ConcreteCarBuilder() override;
 
     // ============ car constructors ============
-    void CreateCar(std::string make = "N/A", std::string model = "N/A");
+    void CreateCar(const std::string& make = "N/A", const std::string& model = "N/A");
 
     // ============ car components builds ============
-    void ProduceEngine();
-    void ProduceChassis();
-    void ProduceTransmission();
+    void ProduceEngine() override;
+    void ProduceChassis() override;
+    void ProduceTransmission() override;
 
     // ============ getters/setters ============
-    inline void SetCar(Car * car);
-    inline Car * GetCar();
+    inline void SetCar(Car* car);
+    inline Car* GetCar();
     
 private:
-    Car * car;
+    Car* car;
 };
 
 // ============ Director ============
 class CarDirector
 {
 public:
-    inline void SetBuilder(CarBuilder * carBuilder);
+	explicit CarDirector(CarBuilder* carBuilder = nullptr);
+
+    inline void SetBuilder(CarBuilder* carBuilder);
 
     // ============ construction functions ============
     // functions that help create a "recipe" for the director to trigger the builder
@@ -66,7 +66,7 @@ public:
     void BuildMaximumViableCar();
 
 private:
-    CarBuilder * carBuilder;
+    CarBuilder* carBuilder;
 };
 
 #include "builder.inl"

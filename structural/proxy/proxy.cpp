@@ -1,18 +1,24 @@
 #include "proxy.hpp"
 
 // =======  =======
-static void printToConsole(std::string toConsole) {
+static void printToConsole(const std::string& toConsole) {
 	std::cout << toConsole << std::endl;
 }
 
 // ======= Time =======
 Time::Time() {
-	const std::chrono::time_point now{ std::chrono::system_clock::now() };
-	const std::chrono::year_month_day ymd{ std::chrono::floor<std::chrono::days>(now) };
+	std::time_t t = std::time(nullptr);
+	std::tm local_tm;
 
-	SetDay(static_cast<unsigned>(ymd.day()));
-	SetMonth(static_cast<unsigned>(ymd.month()));
-	SetYear(static_cast<int>(ymd.year()));
+	#if defined(_WIN32) || defined(_WIN64)
+		localtime_s(&local_tm, &t);
+	#else
+		localtime_r(&t, &local_tm);
+	#endif
+
+	SetDay(local_tm.tm_mday);
+	SetMonth(local_tm.tm_mon + 1); // tm_mon is 0-based
+	SetYear(local_tm.tm_year + 1900); // tm_year is years since 1900
 
 	printToConsole("Time created");
 }
@@ -24,9 +30,9 @@ Time::~Time() {
 // ======= CreditCardOwnerData =======
 CreditCardOwnerData::CreditCardOwnerData(int securityCode,
 										 int cardNumber,
-										 std::string firstName,
-										 std::string lastName,
-										 std::string companyName) :
+										 const std::string& firstName,
+										 const std::string& lastName,
+										 const std::string& companyName) :
 	securityCode(securityCode),
 	cardNumber(cardNumber),
 	firstName(firstName),
@@ -46,9 +52,9 @@ CreditCardData::CreditCardData(bool isPaymentAuthenticated,
 								int validYear,
 								int securityCode,
 								int cardNumber,
-								std::string firstName,
-								std::string lastName,
-								std::string companyName) :
+								const std::string& firstName,
+								const std::string& lastName,
+								const std::string& companyName) :
 	isPaymentAuthenticated(isPaymentAuthenticated),
 	validMonth(validMonth),
 	validYear(validYear),
@@ -100,9 +106,9 @@ double Cash::PayAmount(double payment, Time * time, CreditCardOwnerData * credit
 }
 
 // ======= Credit Card =======
-CreditCard::CreditCard(Cash * cash, 
-						CreditCardData * creditCardData, 
-						Time * time) :
+CreditCard::CreditCard(Cash const* cash, 
+						CreditCardData* creditCardData, 
+						Time* time) :
 	cash(new Cash(*cash)),
 	creditCardData(creditCardData),
 	time(time)
@@ -114,6 +120,19 @@ CreditCard::~CreditCard() {
 	delete cash;
 
 	printToConsole("CreditCard destroyed");
+}
+
+CreditCard::CreditCard(const CreditCard& creditCard) 
+	: cash(creditCard.cash), 
+	creditCardData(creditCard.creditCardData), 
+	time(creditCard.time)
+{ }
+
+CreditCard& CreditCard::operator=(const CreditCard& creditCard) {
+	this->cash = creditCard.cash;
+	this->creditCardData = creditCard.creditCardData;
+	this->time = creditCard.time;
+	return *this;
 }
 
 double CreditCard::CheckBalance() {
@@ -138,9 +157,9 @@ double CreditCard::PayAmount(double payment,
 	return results;
 }
 
-bool CreditCard::CheckPaymentAuthentication(CreditCardData * creditCardData, 
-											Time * time,
-											CreditCardOwnerData * creditCardOwnerData) 
+bool CreditCard::CheckPaymentAuthentication(CreditCardData const* creditCardData, 
+											Time const* time,
+											CreditCardOwnerData const* creditCardOwnerData) 
 {
 	if (CheckValidMonth(creditCardData, creditCardOwnerData) &&
 		CheckValidYear(creditCardData, time, creditCardOwnerData) &&
@@ -160,8 +179,8 @@ bool CreditCard::CheckPaymentAuthentication(CreditCardData * creditCardData,
 		
 }
 
-bool CreditCard::CheckValidMonth(CreditCardData * creditCardData,
-								 CreditCardOwnerData * creditCardOwnerData) 
+bool CreditCard::CheckValidMonth(CreditCardData const* creditCardData,
+								 CreditCardOwnerData const* creditCardOwnerData) 
 {
 	if (1 <= creditCardData->GetValidMonth() &&
 		creditCardData->GetValidMonth() <= 12)
@@ -172,9 +191,9 @@ bool CreditCard::CheckValidMonth(CreditCardData * creditCardData,
 		return false;
 }
 
-bool CreditCard::CheckValidYear(CreditCardData * creditCardData, 
-								Time * time,
-								CreditCardOwnerData * creditCardOwnerData) 
+bool CreditCard::CheckValidYear(CreditCardData const* creditCardData,
+								Time const* time,
+								CreditCardOwnerData const* creditCardOwnerData) 
 {
 	if (time->GetYear() <= creditCardData->GetValidYear()) 
 		return true;
@@ -182,8 +201,8 @@ bool CreditCard::CheckValidYear(CreditCardData * creditCardData,
 		return false;
 }
 
-bool CreditCard::CheckSecurityCode(CreditCardData* creditCardData, 
-								   CreditCardOwnerData* creditCardOwnerData) {
+bool CreditCard::CheckSecurityCode(CreditCardData const* creditCardData, 
+								   CreditCardOwnerData const* creditCardOwnerData) {
 	if (creditCardData->GetSecurityCode() >= 0 &&
 		creditCardData->GetSecurityCode() <= 999 &&
 		creditCardData->GetSecurityCode() == creditCardOwnerData->GetSecurityCode())
@@ -194,8 +213,8 @@ bool CreditCard::CheckSecurityCode(CreditCardData* creditCardData,
 		return false;
 }
 
-bool CreditCard::CheckCardNumber(CreditCardData * creditCardData,
-								 CreditCardOwnerData * creditCardOwnerData) 
+bool CreditCard::CheckCardNumber(CreditCardData const* creditCardData,
+								 CreditCardOwnerData const* creditCardOwnerData) 
 {
 	if (creditCardData->GetCardNumber() == creditCardOwnerData->GetCardNumber())
 		return true;
@@ -203,8 +222,8 @@ bool CreditCard::CheckCardNumber(CreditCardData * creditCardData,
 		return false;
 }
 
-bool CreditCard::CheckFirstName(CreditCardData * creditCardData,
-								CreditCardOwnerData * creditCardOwnerData) 
+bool CreditCard::CheckFirstName(CreditCardData const* creditCardData,
+								CreditCardOwnerData const* creditCardOwnerData) 
 {
 	if (creditCardData->GetFirstName() == creditCardOwnerData->GetFirstName())
 		return true;
@@ -212,8 +231,8 @@ bool CreditCard::CheckFirstName(CreditCardData * creditCardData,
 		return false;
 }
 
-bool CreditCard::CheckLastName(CreditCardData * creditCardData,
-							   CreditCardOwnerData * creditCardOwnerData) 
+bool CreditCard::CheckLastName(CreditCardData const* creditCardData,
+							   CreditCardOwnerData const* creditCardOwnerData) 
 {
 	if (creditCardData->GetLastName() == creditCardOwnerData->GetLastName())
 		return true;
@@ -221,8 +240,8 @@ bool CreditCard::CheckLastName(CreditCardData * creditCardData,
 		return false;
 }
 
-bool CreditCard::CheckCompanyName(CreditCardData * creditCardData,
-								  CreditCardOwnerData * creditCardOwnerData) 
+bool CreditCard::CheckCompanyName(CreditCardData const* creditCardData,
+								  CreditCardOwnerData const* creditCardOwnerData) 
 {
 	if (creditCardData->GetCompany() == creditCardOwnerData->GetCompanyName())
 		return true;
@@ -258,6 +277,12 @@ int main() {
 	auto creditCardBalance_check = RequestCheckBalance(creditCard);
 	auto paymentRemainding = PayBill(creditCard, 60.00, time, creditCardOwnerData);
 	auto creditCardBalance_postcheck = RequestCheckBalance(creditCard);
+
+	printf("Credit Card Balance (Pre-check): %.2f\n", creditCardBalance_precheck);
+	printf("Payment Left: %.2f\n", paymentLeft);
+	printf("Credit Card Balance (Check): %.2f\n", creditCardBalance_check);
+	printf("Payment Remaining: %.2f\n", paymentRemainding);
+	printf("Credit Card Balance (Post-check): %.2f\n", creditCardBalance_postcheck);
 
 	delete time;
 	delete cash;

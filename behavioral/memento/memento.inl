@@ -56,15 +56,15 @@ inline int Originator::getMana() {
 	return this->mana;
 }
 
-inline void Originator::setName(std::string name) {
+inline void Originator::setName(const std::string& name) {
 	this->name = name;
 }
 
-inline void Originator::setSpecialization(std::string specialization) {
+inline void Originator::setSpecialization(const std::string& specialization) {
 	this->specialization = specialization;
 }
 
-inline void Originator::setState(std::string state) {
+inline void Originator::setState(const std::string& state) {
 	this->state = state;
 }
 
@@ -81,12 +81,8 @@ inline void Originator::setMana(int mana) {
 }
 
 // ======== Caretaker ========
-inline Originator * Caretaker::getOriginator() {
+inline Originator* Caretaker::getOriginator() {
 	return this->originator;
-}
-
-inline void Caretaker::setOriginator(std::vector<Memento*> mementos) {
-	this->originator = originator;
 }
 
 inline std::vector<Memento*> &Caretaker::getMementos() {

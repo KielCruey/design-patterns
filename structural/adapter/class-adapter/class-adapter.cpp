@@ -3,22 +3,14 @@
 
 #include "class-adapter.hpp"
 
-#define M_PI    3.14159265358979323846 // pi constant
-
-// ==================== AbstractShapes ====================
-AbstractShapes::~AbstractShapes()
-{
-    
-}
-
 // ==================== Circle ====================
 Circle::Circle(double radius) {
     std::cout << "Circle created" << std::endl;
 
     // populates all private variables
     SetRadius(radius);
-    SetArea(CalculateArea());
-    SetPerimeter(CalculatePerimeter());
+    SetArea(Circle::CalculateArea());
+    SetPerimeter(Circle::CalculatePerimeter());
 }
 
 Circle::~Circle() {
@@ -30,42 +22,6 @@ void Circle::print() {
     std::cout << "radius: " << GetRadius() << std::endl;
     std::cout << "perimeter: " << GetPerimeter() << std::endl;
     std::cout << "area: " << GetArea() << std::endl;
-}
-
-double Circle::CalculateArea() {
-    return M_PI * pow(GetRadius(), 2);
-}
-
-double Circle::CalculatePerimeter() {
-    return 2 * M_PI * GetRadius(); 
-}
-
-int Circle::GetShapeType() {
-    return ShapeType::circle;
-}
-
-double Circle::GetArea() {
-    return this->area;
-}
-
-double Circle::GetPerimeter() {
-    return this->perimeter;
-}
-
-double Circle::GetRadius() {
-    return this->radius;
-}
-
-void Circle::SetArea(double area) {
-    this->area = area;
-}
-
-void Circle::SetPerimeter(double perimeter) {
-    this->perimeter = perimeter;
-}
-
-void Circle::SetRadius(double radius) {
-    this->radius = radius;
 }
 
 // ==================== Triangle ====================
@@ -86,8 +42,8 @@ Triangle::Triangle(double side1, double side2, double angleInDegrees) {
 
     // calculated variables
     SetHypotenuse(CalculateHypotenuse());
-    SetArea(CalculateArea());
-    SetPerimeter(CalculatePerimeter());
+    SetArea(Triangle::CalculateArea());
+    SetPerimeter(Triangle::CalculatePerimeter());
 }
 
 Triangle::~Triangle() {
@@ -121,58 +77,6 @@ double Triangle::ConvertDegreesToRadians(double degrees) {
     return degrees * M_PI / 180; // radians
 }
 
-int Triangle::GetShapeType() {
-    return ShapeType::triangle;
-}
-
-double Triangle::GetSide1() {
-    return this->side1;
-}
-
-double Triangle::GetSide2() {
-    return this->side2;
-}
-
-double Triangle::GetHypotenuse() {
-    return this->hypotenuse;
-}
-
-double Triangle::GetAngle() {
-    return this->angle;
-}
-
-double Triangle::GetArea() {
-    return this->area;
-}
-
-double Triangle::GetPerimeter() {
-    return this->perimeter;
-}
-
-void Triangle::SetSide1(double side1) {
-    this->side1 = side1;
-}
-
-void Triangle::SetSide2(double side2) {
-    this->side2 = side2;
-}
-
-void Triangle::SetHypotenuse(double hypotenuse) {
-    this->hypotenuse = hypotenuse;
-}
-
-void Triangle::SetAngle(double angle) {
-    this->angle = angle;
-}
-
-void Triangle::SetArea(double area) {
-    this->area = area;
-}
-
-void Triangle::SetPerimeter(double perimeter) {
-    this->perimeter = perimeter;
-}
-
 // ==================== Adapter ====================
 ShapeAdapter::ShapeAdapter(AbstractShapes * abstractShapes) :
     pTriangle(nullptr),
@@ -203,7 +107,7 @@ ShapeAdapter::~ShapeAdapter() {
 }
 
 // the area of the circle helps convert all dimensions of the new triangle
-Triangle * ShapeAdapter::ConvertCircleToTriangle(Circle * circle) {
+Triangle * ShapeAdapter::ConvertCircleToTriangle(Circle const* circle) {
     double triangleArea = circle->GetArea(); 
     double triangleSideCalculation = sqrt(2 * triangleArea); // Area = a * b / 2 where a = b, because right triangle legs are the same
 
