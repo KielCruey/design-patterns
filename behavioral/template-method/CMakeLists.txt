@@ -1,0 +1,1 @@
+add_executable(template-method template-method.cpp)

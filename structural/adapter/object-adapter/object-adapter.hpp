@@ -12,10 +12,10 @@ const int UK_HERTS = 50;
 class Outlet
 {
 public:
-    explicit Outlet(bool RoundHoles = NULL, 
-           int NumberOfHoles = NULL,
-           int VoltageRating = NULL,
-           int FrequencyRating = NULL);
+    explicit Outlet(bool RoundHoles = false, 
+           int NumberOfHoles = 0,
+           int VoltageRating = 0,
+           int FrequencyRating = 0);
     virtual ~Outlet();
 
     inline bool GetHasRoundHoles() const;
@@ -69,10 +69,10 @@ public:
 class Plug
 {
 public:
-    explicit Plug(int PinCount = NULL,
-        bool HasRoundPins = NULL,
-        int VoltageRating = NULL,
-        int FrequencyRating = NULL);
+    explicit Plug(int PinCount = 0,
+        bool HasRoundPins = false,
+        int VoltageRating = 0,
+        int FrequencyRating = 0);
     virtual ~Plug();
 
     inline bool GetHasRoundPins() const;

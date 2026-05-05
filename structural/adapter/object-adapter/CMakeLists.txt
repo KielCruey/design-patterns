@@ -1,0 +1,1 @@
+add_executable(object-adaptor object-adapter.cpp)

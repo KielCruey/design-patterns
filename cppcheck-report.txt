@@ -1,2 +1,0 @@
-nofile:0:0: information: Active checkers: 173/975 (use --checkers-report=<filename> to see details) [checkersReport]
-

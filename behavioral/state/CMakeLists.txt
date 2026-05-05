@@ -1,0 +1,1 @@
+add_executable(state state.cpp)

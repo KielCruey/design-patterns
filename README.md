@@ -28,7 +28,7 @@ This creates a report by hand.
 
 However for creating a text report via .txt file, replace <file name> with whatever file you want it:
 ``` shell
-cppcheck --suppress=missingIncludeSystem --error-exitcode=1 --enable=all --output-file=cppcheck-report.txt .
+cppcheck --suppress=missingIncludeSystem --suppress=toomanyconfigs --error-exitcode=1 --enable=all --output-file=cppcheck-report.txt .
 ```
 after running the following command the output of cppcheck will be 1 if there are warnings given or 0 if there aren't any errors. Run the following to see what the output is:
 ``` shell
@@ -43,16 +43,23 @@ used this [repo](https://github.com/marketplace/actions/cppcheck-action) for yam
 ### Configuring Doxygen
 In order to create a LaTex, XML, or PDF file, you must create a configuration file. To do so, use the following command:
 ``` bash 
-doxygen -g // no name on config file will default to "Doxyfile"
-doxygen -g <config-file>
+$ doxygen -g // no name on config file will default to "Doxyfile"
+$ doxygen -g <config-file>
 ```
 ### Generating Report(s)
 
 ``` bash
-doxygen <config-file>
+$ doxygen <config-file>
 ```
 
 Once the documentation is created, look into the `doxygen/html` directory and open `index.html` in your favorite web browser. This will provide you a viewable and dynamic website-like documentation.
+
+## CMake
+Use the following commands to configure and build CMake artifacts:
+``` bash
+$ cmake -G "MinGW Makefiles" -B build -S . # config/generation stage
+$ cmake --build build # build stage
+```
 
 # Design Pattern Resources
 ## Behavior Patterns

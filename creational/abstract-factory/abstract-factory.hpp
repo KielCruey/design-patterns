@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 // ============ ABSTRACT PRODUCT ============
 class AbstractPerson

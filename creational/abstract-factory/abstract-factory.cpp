@@ -132,6 +132,15 @@ int main() {
     ConcreteOrcFactory * orcFactory = new ConcreteOrcFactory();
     CreateOrcArmy(orcFactory);
 
+    std::string str;
+
+    while(std::getline(std::cin, str)) {
+        if(str == "STOP")  
+            break;
+    }
+
     delete humanFactory;
     delete orcFactory;
+
+    return 0;
 }
