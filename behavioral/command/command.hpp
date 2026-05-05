@@ -5,14 +5,13 @@ const int MAXVOLUME = 10;
 const int MINCHANNEL = 0;
 const int MAXCHANNEL = 100;
 
-
 // ============ Receiver ============
 // Receiver contains the business logic when it receives a concrete command.
 // Receiver figures out how to handle the command.
 class TV
 {
 public:
-	TV(bool isPowered = false,
+	explicit TV(bool isPowered = false,
 	   int channel = NULL,
 	   int volume = NULL);
 	~TV() = default;
@@ -54,12 +53,11 @@ public:
 class PowerOn : public TVCommand
 {
 public:
-	PowerOn(TV * tv = nullptr);
-	~PowerOn() = default;
+	explicit PowerOn(TV * tv = nullptr);
+	~PowerOn() override = default ;
 
 	virtual void execute() override;
 
-	inline void setTV();
 	inline TV * getTV();
 
 protected:
@@ -69,12 +67,11 @@ protected:
 class PowerOff : public TVCommand
 {
 public:
-	PowerOff(TV * tv = nullptr);
-	~PowerOff() = default;
+	explicit PowerOff(TV * tv = nullptr);
+	~PowerOff() override = default;
 
 	virtual void execute() override;
 
-	inline void setTV();
 	inline TV * getTV();
 
 protected:
@@ -84,12 +81,11 @@ protected:
 class VolumeUp : public TVCommand
 {
 public:
-	VolumeUp(TV * tv = nullptr);
-	~VolumeUp() = default;
+	explicit VolumeUp(TV * tv = nullptr);
+	~VolumeUp() override = default;
 
 	virtual void execute() override;
 
-	inline void setTV();
 	inline TV * getTV();
 
 protected:
@@ -99,12 +95,11 @@ protected:
 class VolumeDown : public TVCommand
 {
 public:
-	VolumeDown(TV * tv = nullptr);
-	~VolumeDown() = default;
+	explicit VolumeDown(TV * tv = nullptr);
+	~VolumeDown() override = default;
 
 	virtual void execute() override;
 
-	inline void setTV();
 	inline TV * getTV();
 
 protected:
@@ -114,12 +109,11 @@ protected:
 class ChannelUp : public TVCommand
 {
 public:
-	ChannelUp(TV * tv = nullptr);
-	~ChannelUp() = default;
+	explicit ChannelUp(TV * tv = nullptr);
+	~ChannelUp() override = default;
 
 	virtual void execute() override;
 
-	inline void setTV();
 	inline TV * getTV();
 
 protected:
@@ -129,12 +123,11 @@ protected:
 class ChannelDown : public TVCommand
 {
 public:
-	ChannelDown(TV * tv = nullptr);
-	~ChannelDown() = default;
+	explicit ChannelDown(TV * tv = nullptr);
+	~ChannelDown() override = default;
 
 	virtual void execute() override;
 
-	inline void setTV();
 	inline TV * getTV();
 
 protected:
@@ -148,7 +141,7 @@ protected:
 class TVRemote
 {
 public:
-	TVRemote(TVCommand* tvCommand = nullptr);
+	explicit TVRemote(TVCommand* tvCommand = nullptr);
 	~TVRemote() = default;
 
 	TVCommand * getTVCommand() const;
@@ -156,7 +149,6 @@ public:
 
 	void command() const;
 
-	inline void setTVCommand(TVCommand* tvCommand);
 	inline TVCommand * getTVCommand();
 
 protected:

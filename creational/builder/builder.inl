@@ -1,12 +1,4 @@
 // ============ Car ============
-inline void Car::SetMake(std::string make) {
-    this->make = make;
-}
-
-inline void Car::SetModel(std::string model) {
-    this->model = model;
-}
-
 inline std::string Car::GetMake() const {
     return this->make;
 }

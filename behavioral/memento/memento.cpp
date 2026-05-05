@@ -2,12 +2,12 @@
 
 #include "memento.hpp"
 
-static void printToConsole(std::string toConsole) {
+static void printToConsole(const std::string& toConsole) {
 	std::cout << toConsole << std::endl;
 }
 
 template<typename t>
-static void printContentToConsole(std::string output, t variable) {
+static void printContentToConsole(const std::string& output, t variable) {
 	std::cout << output << variable << std::endl;
 }
 
@@ -26,18 +26,18 @@ Memento::Memento(std::string name,
 				 std::string state,
 				 int level,
 				 int health,
-				 int mana) :
+				 int mana, 
+				 const std::string& date,
+				 const std::string& time) :
 	name(name),
 	specialization(specialization),
 	state(state),
 	level(level),
 	health(health),
-	mana(mana)
+	mana(mana),
+	date(date),
+	time(time)
 {
-	// need to initialize date and time variables
-	date = "";
-	time = "";
-
 	printToConsole("Memento created");
 }
 
@@ -76,15 +76,15 @@ Originator::~Originator() {
 	printToConsole("Originator deleted");
 }
 
-void Originator::changeName(std::string newName) {
+void Originator::changeName(const std::string& newName) {
 	setName(newName);
 }
 
-void Originator::changeSpecialization(std::string newSpecialization) {
+void Originator::changeSpecialization(const std::string& newSpecialization) {
 	setSpecialization(newSpecialization);
 }
 
-void Originator::changeState(std::string newState) {
+void Originator::changeState(const std::string& newState) {
 	setState(newState);
 }
 
@@ -98,7 +98,6 @@ void Originator::levelDown() {
 	if (getLevel() > MINIMUM_LEVEL) {
 		setLevel(getLevel() - 1);
 	}
-	
 }
 
 void Originator::healUp() {
@@ -162,9 +161,8 @@ void Caretaker::backup() {
 // deletes the last snapshot, and reverts to last snapshot
 void Caretaker::undo() {
 	// checks if vector is empty
-	if (!getMementos().size()) {
+	if (!getMementos().size())
 		return;
-	}
 	
 	Memento * memento = getMementos().back(); // gets last element
 	getMementos().pop_back(); // deletes last element
@@ -180,9 +178,8 @@ void Caretaker::undo() {
 void Caretaker::showHistory() {
 	printToConsole("List of Memento Saves:");
 
-	for (Memento * memento : getMementos())	{
+	for (Memento * memento : getMementos())	
 		printSavedData(memento);
-	}
 }
 
 // ======== Main ========
@@ -194,8 +191,10 @@ int main() {
 	// manipulating the 'originator' class and saving snapshots
 	caretaker->backup();
 	caretaker->showHistory();
+	caretaker->undo();
 
 	originator->levelUp();
+	originator->levelDown();
 	caretaker->backup();
 	caretaker->showHistory();
 
@@ -217,7 +216,8 @@ int main() {
 	caretaker->backup();
 	caretaker->showHistory();
 
-	originator->changeName("Georgia");
+	std::string name = "Georgia";
+	originator->changeName(name);
 	caretaker->backup();
 	caretaker->showHistory();
 

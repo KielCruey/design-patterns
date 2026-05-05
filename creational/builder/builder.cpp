@@ -1,7 +1,7 @@
 #include "builder.hpp"
 
 // ============ Car ============
-Car::Car(std::string make, std::string model) :
+Car::Car(const std::string& make, const std::string& model) :
     make(make),
     model(model)
 {
@@ -21,7 +21,7 @@ void Car::printModel() const {
 }
 
 // ============ Concrete Builder ============
-ConcreteCarBuilder::ConcreteCarBuilder(std::string make, std::string model){
+ConcreteCarBuilder::ConcreteCarBuilder(const std::string& make, const std::string& model){
     this->CreateCar(make, model);
 }
 
@@ -29,7 +29,7 @@ ConcreteCarBuilder::~ConcreteCarBuilder() {
     delete this->car;
 }
 
-void ConcreteCarBuilder::CreateCar(std::string make, std::string model) {
+void ConcreteCarBuilder::CreateCar(const std::string& make, const std::string& model) {
     SetCar(new Car(make, model));
 }
 
@@ -46,6 +46,10 @@ void ConcreteCarBuilder::ProduceTransmission() {
 }
 
 // ============ Director ============
+inline CarDirector::CarDirector(CarBuilder* carBuilder)
+    : carBuilder(carBuilder)
+{ }
+
 void CarDirector::BuildMinimalViableCar() {
     this->carBuilder->ProduceChassis();
 }
@@ -100,7 +104,7 @@ static void ProjectCars(CarDirector * carDirector) {
     builder->ProduceChassis();
 
     // creating an Car object then populating that object via ConcreteCarBuilder
-    Car * springCar = builder->GetCar();
+    Car const* springCar = builder->GetCar();
     springCar->printMake();
     springCar->printModel();
     delete builder;

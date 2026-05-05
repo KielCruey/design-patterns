@@ -19,18 +19,13 @@ const int BEVERAGE_WATER = 8;
 class Extras
 {
 public:
-	Extras(int sugarShot = MAX_EXTRAS_AMOUNT,
+	explicit Extras(int sugarShot = MAX_EXTRAS_AMOUNT,
 		   int creamShot = MAX_EXTRAS_AMOUNT,
 		   int milkShot = MAX_EXTRAS_AMOUNT,
 		   int chocolateShot = MAX_EXTRAS_AMOUNT);
 	~Extras() = default;
 
 	// getters/setters
-	inline int getSugarShot() const;
-	inline int getCreamShot() const;
-	inline int getMilkShot() const;
-	inline int getChocolateShot() const;
-
 	inline void setSugarShot(int sugarShot);
 	inline void setCreamShot(int creamShot);
 	inline void setMilkShot(int milkShot);
@@ -46,7 +41,7 @@ private:
 class Teas
 {
 public:
-	Teas(int greenTea = MAX_BEVERAGE_AMOUNT,
+	explicit Teas(int greenTea = MAX_BEVERAGE_AMOUNT,
 		 int blackTea = MAX_BEVERAGE_AMOUNT,
 		 int chiaTea = MAX_BEVERAGE_AMOUNT);
 	~Teas() = default;
@@ -69,7 +64,7 @@ private:
 class Coffees
 {
 public:
-	Coffees(int lightRoast = MAX_BEVERAGE_AMOUNT,
+	explicit Coffees(int lightRoast = MAX_BEVERAGE_AMOUNT,
 			int mediumRoast = MAX_BEVERAGE_AMOUNT,
 			int darkRoast = MAX_BEVERAGE_AMOUNT);
 	~Coffees() = default;
@@ -94,12 +89,15 @@ private:
 class BeverageMaker
 {
 public:
-	BeverageMaker(Extras * extras = nullptr,
-				  Teas * teas = nullptr,
-				  Coffees * coffees = nullptr,
+	BeverageMaker(const Extras* extras = nullptr,
+				  const Teas* teas = nullptr,
+				  const Coffees* coffees = nullptr,
 				  int cups = MAX_CUPS,
 				  double waterAmount = MAX_WATER_AMOUNT);
 	~BeverageMaker();
+
+	BeverageMaker(const BeverageMaker& beverageMaker); // copy constructor
+	BeverageMaker& operator= (const BeverageMaker& beverageMaker); // copy assignment
 
 	// class actions
 	virtual void makeBeverage(std::string beverageSelected) = 0;
@@ -116,9 +114,6 @@ public:
 	inline int getCups() const;
 	inline double getWaterAmount() const;
 
-	inline void setExtras(Extras * extras);
-	inline void setTeas(Teas * teas);
-	inline void setCoffees(Coffees * coffees);
 	inline void setCups(int cups);
 	inline void setWaterAmount(double waterAmount); // in fl oz
 
@@ -144,8 +139,8 @@ private:
 class TeaMaker : public BeverageMaker
 {
 public:
-	TeaMaker(Extras * extras,
-			Teas * teas,
+	TeaMaker(const Extras* extras,
+			const Teas* teas,
 			int cups = MAX_CUPS,
 			double waterAmount = MAX_WATER_AMOUNT);
 	~TeaMaker();
@@ -162,8 +157,8 @@ public:
 class CoffeeMaker : public BeverageMaker
 {
 public:
-	CoffeeMaker(Extras * extras,
-				Coffees * coffees,
+	CoffeeMaker(const Extras* extras,
+				const Coffees* coffees,
 				int cups = MAX_CUPS,
 				double waterAmount = MAX_WATER_AMOUNT);
 	~CoffeeMaker();

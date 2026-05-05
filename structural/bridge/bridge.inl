@@ -1,14 +1,6 @@
 // ============= Movie =============
-inline void Movie::SetName(std::string name) {
-    this->name = name;
-}
-
 inline void Movie::SetCurrentDuration(double currentDuration) {
     this->currentDuration = currentDuration;
-}
-
-inline void Movie::SetTotalDuration(double totalDuration) {
-    this->totalDuration = totalDuration;
 }
 
 inline std::string Movie::GetName() const {
@@ -24,10 +16,6 @@ inline double Movie::GetTotalDuration() const {
 }
 
 // ============= TVDevice =============
-inline void TVDevice::SetMovie(Movie* movie) {
-    this->movie = movie;
-}
-
 void TVDevice::SetIsPlaying(bool isPlaying) {
     this->isPlaying = isPlaying;
 }
@@ -108,8 +96,4 @@ inline int RadioDevice::GetChannel() const {
 // ============= Abstraction =============
 inline Device* Remote::GetDevice() const {
     return this->device;
-}
-
-inline void Remote::SetDevice(Device* device) {
-    this->device = device;
 }

@@ -8,8 +8,6 @@ public:
 	Time();
 	~Time();
 
-	inline int GetDay() const;
-	inline int GetMonth() const;
 	inline int GetYear() const;
 	inline void SetDay(int day);
 	inline void SetMonth(int month);
@@ -24,11 +22,11 @@ private:
 class CreditCardOwnerData
 {
 public:
-	CreditCardOwnerData(int securityCode = NULL,
+	explicit CreditCardOwnerData(int securityCode = NULL,
 						int cardNumber = NULL,
-						std::string firstName = nullptr,
-						std::string lastName = nullptr,
-						std::string companyName = nullptr);
+						const std::string& firstName = nullptr,
+						const std::string& lastName = nullptr,
+						const std::string& companyName = nullptr);
 	~CreditCardOwnerData();
 
 	inline int GetSecurityCode() const;
@@ -39,9 +37,6 @@ public:
 
 	inline void SetSecurityCode(int securityCode);
 	inline void SetCardNumber(int cardNumber);
-	inline void SetFirstName(std::string firstName);
-	inline void SetLastName(std::string lastName);
-	inline void SetCompany(std::string companyName);
 
 private: 
 	int securityCode;
@@ -55,17 +50,16 @@ private:
 class CreditCardData
 {
 public:
-	CreditCardData(bool isPaymentAuthenticated = NULL,
+	explicit  CreditCardData(bool isPaymentAuthenticated = NULL,
 					int validMonth = NULL,
 					int validYear = NULL,
 					int securityCode = NULL,
 					int cardNumber = NULL,
-					std::string firstName = nullptr,
-					std::string lastName = nullptr,
-					std::string companyName = nullptr);
+					const std::string& firstName = nullptr,
+					const std::string& lastName = nullptr,
+					const std::string& companyName = nullptr);
 	~CreditCardData();
 
-	inline bool GetisPaymentAuthenticated() const;
 	inline int GetValidMonth() const;
 	inline int GetValidYear() const;
 	inline int GetSecurityCode() const;
@@ -74,14 +68,8 @@ public:
 	inline std::string GetLastName() const;
 	inline std::string GetCompany() const;
 
-	inline void SetisPaymentAuthenticated(bool isPaymentAuthenticated);
-	inline void SetValidMonth(int validMonth);
-	inline void SetValidYear(int validYear);
 	inline void SetSecurityCode(int securityCode);
 	inline void SetCardNumber(int cardNumber);
-	inline void SetFirstName(std::string firstName);
-	inline void SetLastName(std::string lastName);
-	inline void SetCompany(std::string companyName);
 
 private:
 	bool isPaymentAuthenticated;
@@ -107,7 +95,7 @@ public:
 class Cash : public PaymentType
 {
 public:
-	Cash(double paymentBalance = NULL, 
+	explicit Cash(double paymentBalance = NULL, 
 			double paymentTotal = NULL);
 	~Cash() override;
 
@@ -115,10 +103,8 @@ public:
 	double PayAmount(double payment, Time * time, CreditCardOwnerData * creditCardOwnerData) override;
 
 	inline double GetPaymentBalance() const;
-	inline double GetPaymentTotal() const;
 
 	inline void SetPaymentBalance(double paymentBalance);
-	inline void SetPaymentTotal(double paymentTotal);
 
 private:
 	double paymentBalance;
@@ -129,10 +115,13 @@ private:
 class CreditCard : public PaymentType
 {
 public:
-	CreditCard(Cash * cash = nullptr, 
-				CreditCardData * creditCardData = nullptr,
-				Time * time = nullptr);
+	explicit CreditCard(Cash const* cash = nullptr,
+				CreditCardData* creditCardData = nullptr,
+				Time* time = nullptr);
 	~CreditCard() override;
+
+	CreditCard(const CreditCard& creditCard); // copy constructor
+	CreditCard& operator= (const CreditCard& creditCard); // copy assignment
 
 	double CheckBalance() override;
 	double PayAmount(double payment, Time * time, CreditCardOwnerData * creditCardOwnerData) override;
@@ -140,25 +129,20 @@ public:
 protected:
 	inline Cash * GetCash() const;
 	inline CreditCardData * GetCreditCardData() const;
-	inline Time * GetTime();
-
-	inline void SetCash(Cash * cash);
-	inline void SetCreditCardData(CreditCardData * creditCardData);
-	inline void SetTime(Time * time);
 
 	Cash * cash; // credit card is used to pay cash as payment
 	CreditCardData * creditCardData;
 	Time * time; // 
 
 private:
-	bool CheckPaymentAuthentication(CreditCardData* creditCardData, Time* time, CreditCardOwnerData* creditCardOwnerData);
-	bool CheckValidMonth(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
-	bool CheckValidYear(CreditCardData* creditCardData, Time* time, CreditCardOwnerData* creditCardOwnerData);
-	bool CheckSecurityCode(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
-	bool CheckCardNumber(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
-	bool CheckFirstName(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
-	bool CheckLastName(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
-	bool CheckCompanyName(CreditCardData* creditCardData, CreditCardOwnerData* creditCardOwnerData);
+	bool CheckPaymentAuthentication(CreditCardData const* creditCardData, Time const* time, CreditCardOwnerData const* creditCardOwnerData);
+	bool CheckValidMonth(CreditCardData const* creditCardData, CreditCardOwnerData const* creditCardOwnerData);
+	bool CheckValidYear(CreditCardData const* creditCardData, Time const* time, CreditCardOwnerData const* creditCardOwnerData);
+	bool CheckSecurityCode(CreditCardData const* creditCardData, CreditCardOwnerData const* creditCardOwnerData);
+	bool CheckCardNumber(CreditCardData const* creditCardData, CreditCardOwnerData const* creditCardOwnerData);
+	bool CheckFirstName(CreditCardData const* creditCardData, CreditCardOwnerData const* creditCardOwnerData);
+	bool CheckLastName(CreditCardData const* creditCardData, CreditCardOwnerData const* creditCardOwnerData);
+	bool CheckCompanyName(CreditCardData const* creditCardData, CreditCardOwnerData const* creditCardOwnerData);
 };
 
 #include "proxy.inl"

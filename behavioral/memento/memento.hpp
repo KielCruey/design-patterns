@@ -10,7 +10,7 @@ const int MAXIMUM_VALUE = 100;
 // ========= Memento =========
 /*
 * The Memento object is responsible for storing the state of the Originator. 
-* It doesn’t expose the state to other objects. 
+* It doesnï¿½t expose the state to other objects. 
 * It typically has methods to get and set the state of the Originator.
 */
 class AbstractMemento
@@ -34,16 +34,18 @@ public:
 class Memento : public AbstractMemento
 {
 public:
-	Memento(std::string name = nullptr,
+	explicit Memento(std::string name = nullptr,
 			std::string specialization = nullptr,
 			std::string state = nullptr,
 			int level = NULL,
 			int health = NULL,
-			int mana = NULL);
-	virtual ~Memento();
+			int mana = NULL,
+			const std::string& date = NULL,
+			const std::string& time = NULL);
+	virtual ~Memento() override;
 
-	inline virtual std::string getDate(); // date of the memento save
-	inline virtual std::string getTime(); // time of the save
+	inline virtual std::string getDate() override; // date of the memento save
+	inline virtual std::string getTime() override; // time of the save
 
 	// only need getters for saving
 	inline virtual std::string getName() override;
@@ -75,7 +77,7 @@ private:
 class Originator
 {
 public:
-	Originator(std::string name = nullptr,
+	explicit Originator(std::string name = nullptr,
 			   std::string specialization = nullptr,
 			   std::string state = nullptr,
 			   int level = NULL,
@@ -84,9 +86,9 @@ public:
 	~Originator();
 
 	// class actions
-	void changeName(std::string newName);
-	void changeSpecialization(std::string newSpecialization);
-	void changeState(std::string newState);
+	void changeName(const std::string& newName);
+	void changeSpecialization(const std::string& newSpecialization);
+	void changeState(const std::string& newState);
 
 	void levelUp();
 	void levelDown();
@@ -107,9 +109,9 @@ public:
 	inline int getHealth();
 	inline int getMana();
 
-	inline void setName(std::string name);
-	inline void setSpecialization(std::string specialization);
-	inline void setState(std::string state);
+    inline void setName(const std::string& name);
+	inline void setSpecialization(const std::string& specialization);
+	inline void setState(const std::string& state);
 	inline void setLevel(int level);
 	inline void setHealth(int health);
 	inline void setMana(int mana);
@@ -126,25 +128,24 @@ private:
 // ========= Caretaker =========
 /*
 * The Caretaker is responsible for keeping track of the Memento objects and their history. It can save and retrieve Memento objects from a collection. 
-* It doesn’t modify the Memento’s state but can request the Originator to save or restore its state using a Memento.
+* It doesnï¿½t modify the Mementoï¿½s state but can request the Originator to save or restore its state using a Memento.
 */
 class Caretaker 
 {
 public:
-	Caretaker(Originator * originator = nullptr);
+	explicit Caretaker(Originator * originator = nullptr);
 	~Caretaker();
 
 	void backup();
 	void undo();
 	void showHistory();
 
-	inline Originator * getOriginator();
-	inline void setOriginator(std::vector<Memento *> mementos);
+	inline Originator* getOriginator();
 
-	inline std::vector<Memento *> &getMementos();
+	inline std::vector<Memento*> &getMementos();
 
 protected:
-	Originator * originator;
+	Originator* originator;
 
 	// data structure to hold Originator's snapshots/saves
 	std::vector<Memento*> mementos;

@@ -21,22 +21,6 @@ Entity::~Entity() {
     std::cout << "Entity destroyed" << std::endl;
 }
 
-void Entity::SetHealth(int health) {
-    if(0 > health) {
-        this->health = 0;
-        std::cout << "Entity dead -- Health at zero" << std::endl;
-    }
-    else this->health = health;
-}
-
-void Entity::SetMana(int mana) {
-    if(0 > mana) {
-        this->mana = 0;
-        std::cout << "Entity drained -- Mana at zero" << std::endl;
-    }
-    else this->mana = mana;
-}
-
 void Entity::SetFatigue(int fatigue) {
     if(0 > fatigue) {
         this->fatigue = 0;

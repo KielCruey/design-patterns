@@ -3,18 +3,19 @@ class iShapeVisitor;
 // ========= element =========
 class iShape
 {
-    public:
+public:
     virtual void accept(iShapeVisitor* visitor) = 0;
 };
 
 // ========= concrete elements =========
-class Circle : public iShape
+class Ring : public iShape
 {
 public:
-    Circle(double radius);
+    explicit Ring(double radius = 1); 
     
-    double getRadius();
-    void accept(iShapeVisitor* visitor);
+    void accept(iShapeVisitor* visitor) override;
+
+    inline double getRadius() const;
 
 private:
     double radius;
@@ -23,10 +24,11 @@ private:
 class Square : public iShape
 {
 public:
-	Square(double side);
+	explicit Square(double side = 1);
 
-	double getSide();
-	void accept(iShapeVisitor* visitor);
+	void accept(iShapeVisitor* visitor) override;
+
+    inline double getSide() const;
 
 private:
 	double side;
@@ -35,11 +37,12 @@ private:
 class Rectangle : public iShape
 {
 public:
-	Rectangle(double length, double width);
+	explicit Rectangle(double length = 1, double width = 1);
 
-	double getLength();
-	double getWidth();
-	void accept(iShapeVisitor* visitor);
+	void accept(iShapeVisitor* visitor) override;
+
+    inline double getLength() const;
+    inline double getWidth() const;
 
 private:
 	double length;
@@ -50,7 +53,7 @@ private:
 class iShapeVisitor
 {
 public:
-    virtual void visit(Circle* circle) = 0;
+    virtual void visit(Ring* Ring) = 0;
     virtual void visit(Square* square) = 0;
     virtual void visit(Rectangle* rectangle) = 0;
 };
@@ -59,11 +62,13 @@ public:
 class AreaVisitor : public iShapeVisitor
 {
 public:
-    void visit(Circle* circle);
-    void visit(Square* square);
-    void visit(Rectangle* rectangle);
+    explicit AreaVisitor(double area = 0);
 
-    double getArea();
+    void visit(Ring* Ring) override;
+    void visit(Square* square) override;
+    void visit(Rectangle* rectangle) override;
+
+    inline double getArea() const;
 
 private:
     double area;
@@ -72,12 +77,16 @@ private:
 class PerimeterVisitor : public iShapeVisitor
 {
 public:
-    void visit(Circle* circle);
-    void visit(Square* square);
-    void visit(Rectangle* rectangle);
+    explicit PerimeterVisitor(double perimeter = 0);
 
-    double getPerimeter();
+    void visit(Ring* Ring) override;
+    void visit(Square* square) override;
+    void visit(Rectangle* rectangle) override;
+
+    inline double getPerimeter() const;
 
 private:
     double perimeter;
 };
+
+#include "visitor.inl"

@@ -13,15 +13,6 @@ ComputerComponent::~ComputerComponent() {
     std::cout << "ComputerComponent destroyed" << std::endl;
 }
 
-// --------------- getters/setters ---------------
-ComputerComponent * ComputerComponent::GetParent() const {
-    return this->parent;
-}
-
-void ComputerComponent::SetParent(ComputerComponent * parent) {
-    this->parent = parent;
-}
-
 // --------------- virtuals ---------------
 bool ComputerComponent::IsComposite() {
     return false;
@@ -32,7 +23,7 @@ void ComputerComponent::Print() {
 }
 
 // ============= Abstract Leaf =============
-Part::Part(std::string brandName, std::string modelName) :
+Part::Part(std::string& brandName, std::string& modelName) :
     brandName(brandName),
     modelName(modelName)
 {
@@ -43,20 +34,10 @@ Part::~Part() {
     std::cout << "Part destroyed" << std::endl;
 }
 
-std::string Part::GetBrandName() const {
-    return this->brandName;
+void Part::Add(ComputerComponent* computerComponent) {
 }
 
-std::string Part::GetModelName() const {
-    return this->modelName;
-}
-
-void Part::SetBrandName(std::string brandName) {
-    this->brandName = brandName;
-}
-
-void Part::SetModelName(std::string modelName) {
-    this->modelName = modelName;
+void Part::Remove(ComputerComponent* computerComponent) {
 }
 
 // --------------- virtuals ---------------
@@ -70,9 +51,9 @@ void Part::Print() {
 }
 
 // ============= Concrete Leaves -- Mouse =============
-Mouse::Mouse(int dpi,
-                std::string brandName, 
-                std::string modelName) :
+Mouse::Mouse(std::string& brandName, 
+            std::string& modelName,
+            int dpi) :
     Part(brandName, modelName),
     dpi(dpi)
 {
@@ -81,14 +62,6 @@ Mouse::Mouse(int dpi,
 
 Mouse::~Mouse() {
     std::cout << "Mouse destroyed" << std::endl;
-}
-
-int Mouse::GetDPI() const {
-    return this->dpi;
-}
-
-void Mouse::SetDPI(int dpi) {
-    this->dpi = dpi;
 }
 
 // ------ virtuals ------
@@ -113,14 +86,6 @@ Keyboard::Keyboard(bool hasClickyKeys,
 
 Keyboard::~Keyboard() {
     std::cout << "Keyboard destroyed" << std::endl;
-}
-
-bool Keyboard::GetHasClickyKeys() const {
-    return this->hasClickyKeys;
-}
-
-void Keyboard::SetHasClickyKeys(bool HasClickyKeys) {
-    this->hasClickyKeys = hasClickyKeys;
 }
 
 // ------ virtuals ------
@@ -149,22 +114,6 @@ Monitor::~Monitor() {
     std::cout << "Monitor deleted" << std::endl;
 }
 
-double Monitor::GetLength() const {
-    return this->length;
-}
-
-double Monitor::GetWidth() const {
-    return this->width;
-}
-
-void Monitor::SetLength(double length) {
-    this->length = length;
-}
-
-void Monitor::SetWidth(double width) {
-    this->width = width;
-}
-
 // ------ virtuals ------
 bool Monitor::IsComposite() { 
     return false;
@@ -189,22 +138,6 @@ Speakers::Speakers(bool isPowered,
 
 Speakers::~Speakers() {
     std::cout << "Speakers destroyed" << std::endl;
-}
-
-bool Speakers::GetIsPowered() const {
-    return this->isPowered;
-}
-
-int Speakers::GetVolume() const {
-    return this->volume;
-}
-
-void Speakers::SetIsPowered(bool isPowered) {
-    this->isPowered = isPowered;
-}
-
-void Speakers::SetVolume(int volume) {
-    this->volume = volume;
 }
 
 // ------ virtuals ------
@@ -234,22 +167,6 @@ SSD::~SSD() {
     std::cout << "SSD destroyed" << std::endl;
 }
 
-double SSD::GetCurrentStorage() const {
-    return this->currentStorage;
-}
-
-double SSD::GetTotalStorage() const {
-    return this->totalStorage;
-}
-
-void SSD::SetCurrentStorage(double currentStorage) {
-    this->currentStorage = currentStorage;
-}
-
-void SSD::SetTotalStorage(double totalStorage) {
-    this->totalStorage = totalStorage;
-}
-
 // ------ virtuals ------
 bool SSD::IsComposite() {
     return false;
@@ -273,14 +190,6 @@ RAM::RAM(double capacity,
 
 RAM::~RAM() {
     std::cout << "RAM destroyed" << std::endl;
-}
-
-double RAM::GetCapacity() const {
-    return this->capacity;
-}
-
-void RAM::SetCapacity(double capacity) {
-    this->capacity = capacity;
 }
 
 // ------ virtuals ------
@@ -307,14 +216,6 @@ CPU::~CPU() {
     std::cout << "CPU destroyed" << std::endl;
 }
 
-int CPU::GetCores() const {
-    return this->cores;
-}
-
-void CPU::SetCores(int cores) {
-    this->cores = cores;
-}
-
 // ------ virtuals ------
 bool CPU::IsComposite() {
     return false;
@@ -339,14 +240,6 @@ GPU::~GPU() {
     std::cout << "GPU destroyed" << std::endl;
 }
 
-double GPU::GetMemory() const {
-    return this->memory;
-}
-
-void GPU::SetMemory(double memory) {
-    this->memory = memory;
-}
-
 // ------ virtuals ------
 bool GPU::IsComposite() {
     return false;
@@ -364,10 +257,6 @@ Computer::Computer() {
 
 Computer::~Computer() {
     std::cout << "Computer composite object created" << std::endl;
-}
-
-std::list<ComputerComponent*> Computer::GetChilden() const {
-    return this->children;
 }
 
 void Computer::Add(ComputerComponent * computerComponent) {
@@ -397,11 +286,6 @@ Peripherals::Peripherals() {
 
 Peripherals::~Peripherals() {
     std::cout << "Peripherals composite object destroyed" << std::endl;
-}
-
-// calls the print function for all the items in the 'children' list
-std::list<ComputerComponent*> Peripherals::GetChilden() const {
-    return this->children;
 }
 
 // this Composite class adds an object to its list and assigns that object to its parent Component
@@ -436,11 +320,6 @@ Tower::~Tower() {
     std::cout << "Tower composite object destroyed" << std::endl;
 }
 
-// calls the print function for all the items in the 'children' list
-std::list<ComputerComponent*> Tower::GetChilden() const {
-    return this->children;
-}
-
 // this Composite class adds an object to its list and assigns that object to its parent Component
 void Tower::Add(ComputerComponent * computerComponent) {
     children.push_back(computerComponent);
@@ -471,10 +350,6 @@ Motherboard::Motherboard() {
 
 Motherboard::~Motherboard() {
     std::cout << "Motherboard composite object destroyed" << std::endl;
-}
-
-std::list<ComputerComponent*> Motherboard::GetChilden() const {
-    return this->children;
 }
 
 void Motherboard::Add(ComputerComponent * computerComponent) {
@@ -511,7 +386,9 @@ void CreateComputer(Computer * computer) {
 
     tower->Add(motherboard);
 
-    Mouse * mouse = new Mouse(1000, "Logitech", "G502 Hero");
+	std::string logitech = "Logitech";
+	std::string g502Hero = "G502 Hero";
+    Mouse * mouse = new Mouse(logitech, g502Hero, 1000);
     Keyboard * keyboard = new Keyboard(false, "Cool Master", "Quick Fire");
     Monitor * monitor = new Monitor(9, 16, "Asus", "42069 Gaming");
     Speakers* speakers = new Speakers(true, 5, "Adams", "A7V");

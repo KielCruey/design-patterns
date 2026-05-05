@@ -3,58 +3,43 @@
 
 #include <vector>
 #include <iostream>
-#include <iomanip> // setprecision
 
 #include "visitor.hpp"
 
-// ========= concrete elements =========
-// ========= concrete Circle =========
-Circle::Circle(double radius = 1) 
+// ========= Ring =========
+Ring::Ring(double radius) 
 	: radius(radius)
 { }
-    
-double Circle::getRadius() {
-	return this->radius;
-}
 
-void Circle::accept(iShapeVisitor* visitor) {
+void Ring::accept(iShapeVisitor* visitor) {
 	visitor->visit(this);
 }
 
-// ========= concrete Square =========
+// ========= Square =========
 Square::Square(double side) 
 	: side(side)
 { }
-
-double Square::getSide() {
-	return this->side;
-}
 
 void Square::accept(iShapeVisitor* visitor) {
 	visitor->visit(this);
 }
 
-// ========= concrete Rectangle =========
+// ========= Rectangle =========
 Rectangle::Rectangle(double length, double width)
 	: length(length), width(width)
 { }
-
-double Rectangle::getLength() {
-	return this->length;
-}
-
-double Rectangle::getWidth() {
-	return this->width;
-}
 
 void Rectangle::accept(iShapeVisitor* visitor) {
 	visitor->visit(this);
 }
 
-// ========= concrete vistor =========
-// ========= area vistor =========
-void AreaVisitor::visit(Circle* circle) {
-	area = M_PI * pow(circle->getRadius(),2);
+// ========= AreaVisitor=========
+AreaVisitor::AreaVisitor(double area)
+	: area(area)
+{ }
+
+void AreaVisitor::visit(Ring* Ring) {
+	area = M_PI * pow(Ring->getRadius(),2);
 }
 
 void AreaVisitor::visit(Square* square) {
@@ -65,13 +50,13 @@ void AreaVisitor::visit(Rectangle* rectangle) {
 	area = rectangle->getLength() * rectangle->getWidth();
 }
 
-double AreaVisitor::getArea() {
-	return this->area;
-}
+// ========= PerimeterVisitor =========
+PerimeterVisitor::PerimeterVisitor(double perimeter) 
+	: perimeter(perimeter)	
+{ }
 
-// ========= parameter vistor =========
-void PerimeterVisitor::visit(Circle* circle) {
-	perimeter = 2 * M_PI * circle->getRadius();
+void PerimeterVisitor::visit(Ring* Ring) {
+	perimeter = 2 * M_PI * Ring->getRadius();
 }
 
 void PerimeterVisitor::visit(Square* square) {
@@ -82,13 +67,9 @@ void PerimeterVisitor::visit(Rectangle* rectangle) {
 	perimeter = 2 * rectangle->getLength() + 2 * rectangle->getWidth();
 }
 
-double PerimeterVisitor::getPerimeter() {
-	return this->perimeter;
-}
-
 // ========= Main =========
 int main() {
-	Circle *circle = new Circle(4);
+	Ring *ring = new Ring(4);
 	Square *square = new Square(20);
 	Rectangle *rectangle = new Rectangle(5,3);
 
@@ -97,12 +78,12 @@ int main() {
 
 	std::vector<double> values;
 
-	// ===== circle =====
-	circle->accept(aVisitor);
-	auto areaCircle = aVisitor->getArea();
+	// ===== Ring =====
+	ring->accept(aVisitor);
+	auto areaRing = aVisitor->getArea();
 
-	circle->accept(pVisitor);
-	auto perimeterCircle = pVisitor->getPerimeter();
+	ring->accept(pVisitor);
+	auto perimeterRing	 = pVisitor->getPerimeter();
 
 	// ===== square =====
 	square->accept(aVisitor);
@@ -119,8 +100,8 @@ int main() {
 	auto perimeterRectangle = pVisitor->getPerimeter();
 
 	// ===== printing =====
-	values.push_back(areaCircle);
-	values.push_back(perimeterCircle);
+	values.push_back(areaRing);
+	values.push_back(perimeterRing);
 	values.push_back(areaSquare);
 	values.push_back(perimeterSquare);
 	values.push_back(areaRectangle);

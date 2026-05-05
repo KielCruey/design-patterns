@@ -14,14 +14,11 @@ public:
 class BaseHandler : public Handler
 {
 public: 
-    BaseHandler(Handler * nextHandler = nullptr);
+    explicit BaseHandler(Handler * nextHandler = nullptr);
     virtual ~BaseHandler();
 
     virtual Handler * setNext(Handler * handler) override;
     virtual std::string Handle(std::string request) override;
-
-    inline void setHandler(Handler* nextHandler);
-    inline Handler* getHandler() const;
 
 private:
     Handler * nextHandler;
@@ -31,7 +28,7 @@ private:
 class RobotBodyHandler : public BaseHandler 
 {
 public: 
-    RobotBodyHandler(bool hasRobotChest = NULL, 
+    explicit RobotBodyHandler(bool hasRobotChest = NULL, 
                      bool hasRobotPelvis = NULL);
     virtual ~RobotBodyHandler() override;
 
@@ -50,7 +47,7 @@ private:
 class RobotLimbHandler : public BaseHandler 
 {
 public: 
-    RobotLimbHandler(bool hasRobotRightArm = NULL,
+    explicit RobotLimbHandler(bool hasRobotRightArm = NULL,
                      bool hasRobotLeftArm = NULL,
                      bool hasRobotRightLeg = NULL,
                      bool hasRobotLeftLeg = NULL);
@@ -77,7 +74,7 @@ private:
 class RobotCraniumHandler : public BaseHandler 
 {
 public: 
-    RobotCraniumHandler(bool hasRobotCranium = NULL);
+    explicit RobotCraniumHandler(bool hasRobotCranium = NULL);
     virtual ~RobotCraniumHandler() override;
 
     virtual std::string Handle(std::string request) override;

@@ -16,6 +16,44 @@ The goal is to have the code:
 * create a CI/CD loop (Github Actions)
 * containerize the code on a Linux platform (Docker)
 
+# CI/CD Notes
+## CppCheck
+### Generating Report(s)
+Use the following commands to run CppCheck:
+``` chell
+cppcheck --enable=all <file-1> <file-2> ... // certain files
+cppcheck --enable=all *.cpp *.hpp *.inl // all files in repo
+```
+This creates a report by hand.
+
+However for creating a text report via .txt file, replace <file name> with whatever file you want it:
+``` shell
+cppcheck --suppress=missingIncludeSystem --error-exitcode=1 --enable=all --output-file=cppcheck-report.txt .
+```
+after running the following command the output of cppcheck will be 1 if there are warnings given or 0 if there aren't any errors. Run the following to see what the output is:
+``` shell
+echo $? // prints out exit status
+```
+
+used this [repo](https://github.com/marketplace/actions/cppcheck-action) for yaml file.
+
+## Doxygen
+[Doxygen Documentation](https://www.doxygen.nl/manual/index.html)
+
+### Configuring Doxygen
+In order to create a LaTex, XML, or PDF file, you must create a configuration file. To do so, use the following command:
+``` bash 
+doxygen -g // no name on config file will default to "Doxyfile"
+doxygen -g <config-file>
+```
+### Generating Report(s)
+
+``` bash
+doxygen <config-file>
+```
+
+Once the documentation is created, look into the `doxygen/html` directory and open `index.html` in your favorite web browser. This will provide you a viewable and dynamic website-like documentation.
+
 # Design Pattern Resources
 ## Behavior Patterns
 ### Chain of Responsibility

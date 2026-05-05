@@ -1,6 +1,6 @@
 #include "template-method.hpp"
 
-static void printToConsole(std::string toConsole) {
+static void printToConsole(const std::string& toConsole) {
 	std::cout << toConsole << std::endl;
 }
 
@@ -33,24 +33,18 @@ Coffees::Coffees(int lightRoast,
 	darkRoast(darkRoast)
 { }
 
-// =========== BeverageMaker ===========
-BeverageMaker::BeverageMaker(Extras * extras,
-							Teas * teas,
-							Coffees * coffees,
+// =========== BeverageMaker ===========`
+BeverageMaker::BeverageMaker(const Extras* extras,
+							const Teas* teas,
+							const Coffees* coffees,
 							int cups,
 							double waterAmount) :
 	extras(new Extras(*extras)),
+	teas(new Teas(*teas)),
+	coffees(new Coffees(*coffees)),
 	cups(cups),
 	waterAmount(waterAmount)
 {
-	if (teas != nullptr) {
-		this->teas = new Teas(*teas);
-	}
-
-	if (coffees != nullptr) {
-		this->coffees = new Coffees(*coffees);
-	}
-
 	printToConsole("BeverageMaker created");
 }
 
@@ -67,6 +61,20 @@ BeverageMaker::~BeverageMaker() {
 	}
 
 	printToConsole("BeverageMaker deleted");
+}
+
+BeverageMaker::BeverageMaker(const BeverageMaker& bMaker)
+	: extras(bMaker.extras), teas(bMaker.teas), coffees(bMaker.coffees), cups(bMaker.cups), waterAmount(bMaker.waterAmount)
+{ }
+
+BeverageMaker& BeverageMaker::operator=(const BeverageMaker& bMaker) {
+	this->extras = bMaker.extras;
+	this->teas = bMaker.teas;
+	this->coffees = bMaker.coffees;
+	this->cups = bMaker.cups;
+	this->waterAmount = bMaker.waterAmount;
+
+	return *this;
 }
 
 void BeverageMaker::restockExtras() {
@@ -119,10 +127,10 @@ void BeverageMaker::restockWater() {
 }
 
 // =========== TeaMaker ===========
-TeaMaker::TeaMaker(Extras* extras,
-					Teas* teas,
-					int cups,
-					double waterAmount) :
+TeaMaker::TeaMaker(const Extras* extras,
+				   const Teas* teas,
+				   int cups,
+				   double waterAmount) :
 	BeverageMaker(extras, teas, nullptr, cups, waterAmount)
 { }
 
@@ -155,10 +163,10 @@ void TeaMaker::addExtras() {
 }
 
 // =========== CoffeeMaker ===========
-CoffeeMaker::CoffeeMaker(Extras* extras,
-						Coffees* coffees,
-						int cups,
-						double waterAmount) :
+CoffeeMaker::CoffeeMaker(const Extras* extras,
+						 const Coffees* coffees,
+						 int cups,
+						 double waterAmount) :
 	BeverageMaker(extras, nullptr, coffees, cups, waterAmount)
 { }
 

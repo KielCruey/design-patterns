@@ -1,12 +1,4 @@
 // =========== Entity ===========
-inline int Entity::GetHealth() const {
-    return this->health;
-}
-
-inline int Entity::GetMana() const {
-    return this->mana;
-}
-
 inline int Entity::GetFatigue() const {
     return this->fatigue;
 }
@@ -23,10 +15,6 @@ inline void Archer::SetArrowsEquip(int arrowsEquip) {
 // =========== Entity Specialization ===========
 inline Entity * EntitySpecialization::GetEntity() const {
     return this->entity;
-}
-
-inline void EntitySpecialization::SetEntity(Entity* entity) {
-    this->entity = entity;
 }
 
 // =========== Holy Knight ===========

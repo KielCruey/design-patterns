@@ -11,8 +11,6 @@ public:
 	Mood(Boss * boss = nullptr);
 	virtual ~Mood() = default;
 
-	inline void setBoss(Boss * boss);
-
 	virtual void helpMe() = 0;
 	virtual void directMe() = 0;
 
@@ -26,8 +24,12 @@ protected:
 class Boss
 {
 public:
-	Boss(Mood * mood = nullptr);
+	explicit Boss(Mood * mood = nullptr);
 	~Boss();
+
+	// special memeber functions
+	Boss(const Boss& boss); // copy constructor
+	Boss& operator=(const Boss& boss);// assignment copy constructor
 
 	// allows changing the Boss object at runtime.
 	void TransitionMood(Mood* mood);
@@ -48,7 +50,7 @@ class BadMood : public Mood
 {
 public:
 	BadMood() = default;
-	~BadMood() = default;
+	~BadMood() override = default;
 
 	void helpMe() override;
 	void directMe() override;
@@ -58,7 +60,7 @@ class OkMood : public Mood
 {
 public:
 	OkMood() = default;
-	~OkMood() = default;
+	~OkMood() override = default;
 
 	void helpMe() override;
 	void directMe() override;
@@ -68,7 +70,7 @@ class GoodMood : public Mood
 {
 public:
 	GoodMood() = default;
-	~GoodMood() = default;
+	~GoodMood() override = default;
 
 	void helpMe() override;
 	void directMe() override;

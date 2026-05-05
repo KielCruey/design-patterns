@@ -29,7 +29,6 @@ public:
     // getters/setters
     inline virtual int GetRobotType() = 0;
 
-    inline void SetSerialNumber(int serialNumber);
     inline int GetSerialNumber() const;
 
 private:
@@ -40,7 +39,7 @@ private:
 class ConcreteCivilianRobotPrototype : public RobotPrototype
 {
 public:
-    ConcreteCivilianRobotPrototype(int serialNumber, std::string name);
+    ConcreteCivilianRobotPrototype(int serialNumber, const std::string& name);
     ~ConcreteCivilianRobotPrototype() override;
 
     RobotPrototype * Clone() const override; // creates heap memory robot
@@ -50,7 +49,6 @@ public:
     // getters/setters 
     inline int GetRobotType() override;
 
-    inline void SetName(std::string name);
     inline std::string GetName();
 
 private:
@@ -60,7 +58,7 @@ private:
 class ConcreteMilitaryRobotPrototype : public RobotPrototype
 {
 public:
-    ConcreteMilitaryRobotPrototype(int serialNumber, std::string rank);
+    ConcreteMilitaryRobotPrototype(int serialNumber, const std::string& rank);
     ~ConcreteMilitaryRobotPrototype() override;
 
     RobotPrototype * Clone() const override; // creates heap memory robot
@@ -70,7 +68,6 @@ public:
     // getters/setters 
     inline int GetRobotType() override;
 
-    inline void SetRank(std::string rank);
     inline std::string GetRank();
 
 private:
