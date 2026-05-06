@@ -37,9 +37,9 @@ public:
 	explicit Memento(std::string name = nullptr,
 			std::string specialization = nullptr,
 			std::string state = nullptr,
-			int level = NULL,
-			int health = NULL,
-			int mana = NULL,
+			int level = 0,
+			int health = 0,
+			int mana = 0,
 			const std::string& date = NULL,
 			const std::string& time = NULL);
 	virtual ~Memento() override;
@@ -80,9 +80,9 @@ public:
 	explicit Originator(std::string name = nullptr,
 			   std::string specialization = nullptr,
 			   std::string state = nullptr,
-			   int level = NULL,
-			   int health = NULL,
-			   int mana = NULL);
+			   int level = 0,
+			   int health = 0,
+			   int mana = 0);
 	~Originator();
 
 	// class actions

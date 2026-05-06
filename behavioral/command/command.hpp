@@ -12,8 +12,8 @@ class TV
 {
 public:
 	explicit TV(bool isPowered = false,
-	   int channel = NULL,
-	   int volume = NULL);
+	   int channel = 0,
+	   int volume = 0);
 	~TV() = default;
 
 	// commands (from invoker) that the TV responds to

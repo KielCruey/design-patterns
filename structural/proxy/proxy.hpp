@@ -22,8 +22,8 @@ private:
 class CreditCardOwnerData
 {
 public:
-	explicit CreditCardOwnerData(int securityCode = NULL,
-						int cardNumber = NULL,
+	explicit CreditCardOwnerData(int securityCode = 0,
+						int cardNumber = 0,
 						const std::string& firstName = nullptr,
 						const std::string& lastName = nullptr,
 						const std::string& companyName = nullptr);
@@ -50,11 +50,11 @@ private:
 class CreditCardData
 {
 public:
-	explicit  CreditCardData(bool isPaymentAuthenticated = NULL,
-					int validMonth = NULL,
-					int validYear = NULL,
-					int securityCode = NULL,
-					int cardNumber = NULL,
+	explicit  CreditCardData(bool isPaymentAuthenticated = false,
+					int validMonth = 0,
+					int validYear = 0,
+					int securityCode = 0,
+					int cardNumber = 0,
 					const std::string& firstName = nullptr,
 					const std::string& lastName = nullptr,
 					const std::string& companyName = nullptr);
@@ -95,8 +95,8 @@ public:
 class Cash : public PaymentType
 {
 public:
-	explicit Cash(double paymentBalance = NULL, 
-			double paymentTotal = NULL);
+	explicit Cash(double paymentBalance = 0.0, 
+			double paymentTotal = 0.0);
 	~Cash() override;
 
 	double CheckBalance() override;
