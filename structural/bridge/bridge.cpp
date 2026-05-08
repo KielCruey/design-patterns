@@ -1,6 +1,6 @@
-#include <iostream>
-
 #include "bridge.hpp"
+
+#include <iostream>
 
 enum State { OFF = 0, ON };
 
@@ -15,246 +15,225 @@ double const FAST_FORWARD = 0.25;
 double const FAST_REWIND = 0.25;
 
 // ============= Movie =============
-Movie::Movie(std::string name = "How to Code", double currentDuration = 0, double totalDuration = 60) :
-    name(name),
-    currentDuration(currentDuration),
-    totalDuration(totalDuration)
-{
-    std::cout << "Movie created" << std::endl;
+Movie::Movie(std::string name = "How to Code", double currentDuration = 0,
+             double totalDuration = 60)
+    : name(name), currentDuration(currentDuration),
+      totalDuration(totalDuration) {
+  std::cout << "Movie created" << std::endl;
 }
 
-Movie::~Movie() {
-    std::cout << "Movie destroyed" << std::endl;
-}
+Movie::~Movie() { std::cout << "Movie destroyed" << std::endl; }
 
 // ============= TVDevice =============
-TVDevice::TVDevice(Movie * movie, bool isPlaying, bool isMuted, bool isPowered, int volume, int channel) :
-    movie(movie),
-    isPlaying(isPlaying),
-    isMuted(isMuted),
-    isPowered(isPowered),
-    volume(volume),
-    channel(channel)
-{
-    std::cout << "TV Device created" << std::endl;
+TVDevice::TVDevice(Movie *movie, bool isPlaying, bool isMuted, bool isPowered,
+                   int volume, int channel)
+    : movie(movie), isPlaying(isPlaying), isMuted(isMuted),
+      isPowered(isPowered), volume(volume), channel(channel) {
+  std::cout << "TV Device created" << std::endl;
 }
 
-TVDevice::~TVDevice() {
-    std::cout << "TV Device destroyed" << std::endl;
-}
+TVDevice::~TVDevice() { std::cout << "TV Device destroyed" << std::endl; }
 
 // ============= RadioDevice =============
-RadioDevice::RadioDevice(bool isMuted, bool isPowered, int volume, int channel) :
-	isMuted(isMuted),
-    isPowered(isPowered),
-    volume(volume),
-    channel(channel)
-{
-    std::cout << "Radio Device created" << std::endl;
+RadioDevice::RadioDevice(bool isMuted, bool isPowered, int volume, int channel)
+    : isMuted(isMuted), isPowered(isPowered), volume(volume), channel(channel) {
+  std::cout << "Radio Device created" << std::endl;
 }
 
 RadioDevice::~RadioDevice() {
-    std::cout << "Radio Device destroyed" << std::endl;
+  std::cout << "Radio Device destroyed" << std::endl;
 }
 
 // ============= Abstraction =============
-Remote::Remote(Device * device) :
-    device(device)
-{
-    std::cout << "Remote Device created" << std::endl;
+Remote::Remote(Device *device) : device(device) {
+  std::cout << "Remote Device created" << std::endl;
 }
 
-Remote::~Remote() {
-    std::cout << "Remote Device destroyed" << std::endl;
-}
+Remote::~Remote() { std::cout << "Remote Device destroyed" << std::endl; }
 
 // turns the power on/off
-bool Remote::TogglePower(Device * device) {
-    if(device->GetPower()) {
-        device->SetPower(State::OFF);
-        std::cout << "Remote Device is OFF" << std::endl;
-    }
-    else {
-        device->SetPower(State::ON);
-        std::cout << "Remote Device is ON" << std::endl;
-    }
-        
-    return device->GetPower();
+bool Remote::TogglePower(Device *device) {
+  if (device->GetPower()) {
+    device->SetPower(State::OFF);
+    std::cout << "Remote Device is OFF" << std::endl;
+  } else {
+    device->SetPower(State::ON);
+    std::cout << "Remote Device is ON" << std::endl;
+  }
+
+  return device->GetPower();
 }
 
 // turns the volume on/off
-bool Remote::ToggleMute(Device * device) {
-    if(device->GetIsMuted()) {
-        device->SetIsMuted(State::OFF);
-        std::cout << "Remote Device is UNMUTED" << std::endl;
-    }
-    else {
-        device->SetIsMuted(State::ON);
-        std::cout << "Remote Device is MUTED" << std::endl;
-    }
-        
-    return device->GetIsMuted();
+bool Remote::ToggleMute(Device *device) {
+  if (device->GetIsMuted()) {
+    device->SetIsMuted(State::OFF);
+    std::cout << "Remote Device is UNMUTED" << std::endl;
+  } else {
+    device->SetIsMuted(State::ON);
+    std::cout << "Remote Device is MUTED" << std::endl;
+  }
+
+  return device->GetIsMuted();
 }
 
-int Remote::VolumeUp(Device * device)
-{
-    if(device->GetVolume() < MAXIMUM_VOLUME) 
-        device->SetVolume(device->GetVolume() + 1);
+int Remote::VolumeUp(Device *device) {
+  if (device->GetVolume() < MAXIMUM_VOLUME)
+    device->SetVolume(device->GetVolume() + 1);
 
-    return device->GetVolume();
-}   
-
-int Remote::VolumeDown(Device * device) {
-    if(device->GetVolume() > MINIMUM_VOLUME) 
-        device->SetVolume(device->GetVolume() - 1);
-
-    return device->GetVolume();
+  return device->GetVolume();
 }
 
-int Remote::ChannelUp(Device * device) {
-    if(device->GetChannel() < MAXIMUM_CHANNEL)
-        device->SetChannel(device->GetChannel() + 1);
+int Remote::VolumeDown(Device *device) {
+  if (device->GetVolume() > MINIMUM_VOLUME)
+    device->SetVolume(device->GetVolume() - 1);
 
-    return device->GetChannel();
+  return device->GetVolume();
 }
 
-int Remote::ChannelDown(Device * device) {
-    if(device->GetChannel() > MINIMUM_CHANNEL)
-        device->SetChannel(device->GetChannel() - 1);
+int Remote::ChannelUp(Device *device) {
+  if (device->GetChannel() < MAXIMUM_CHANNEL)
+    device->SetChannel(device->GetChannel() + 1);
 
-    return device->GetChannel();
+  return device->GetChannel();
+}
+
+int Remote::ChannelDown(Device *device) {
+  if (device->GetChannel() > MINIMUM_CHANNEL)
+    device->SetChannel(device->GetChannel() - 1);
+
+  return device->GetChannel();
 }
 
 // ============= Redefined Abstraction =============
-TVRemote::TVRemote(Device * device) :
-    Remote(device)
-{
-    std::cout << "TV Remote Device created" << std::endl;
+TVRemote::TVRemote(Device *device) : Remote(device) {
+  std::cout << "TV Remote Device created" << std::endl;
 }
 
 TVRemote::~TVRemote() {
-    std::cout << "TV Remote Device destroyed" << std::endl;
+  std::cout << "TV Remote Device destroyed" << std::endl;
 }
 
-bool TVRemote::TogglePlay(Device * device)
-{
-    TVDevice * tvDevice = dynamic_cast<TVDevice *>(device);
+bool TVRemote::TogglePlay(Device *device) {
+  TVDevice *tvDevice = dynamic_cast<TVDevice *>(device);
 
-    if(tvDevice->GetIsPlaying()) {
-        tvDevice->SetIsPlaying(State::OFF);
-        std::cout << "TVDevice is NOT PLAYING" << std::endl;
-    }
-    else {
-        tvDevice->SetIsPlaying(State::ON);
-        std::cout << "TVDevice is PLAYING" << std::endl;
-    }
+  if (tvDevice->GetIsPlaying()) {
+    tvDevice->SetIsPlaying(State::OFF);
+    std::cout << "TVDevice is NOT PLAYING" << std::endl;
+  } else {
+    tvDevice->SetIsPlaying(State::ON);
+    std::cout << "TVDevice is PLAYING" << std::endl;
+  }
 
-    return tvDevice->GetIsPlaying();
+  return tvDevice->GetIsPlaying();
 }
 
-// rewinds 1/4 of a minute 
-double TVRemote::FastRewind(Device * device) {
-    TVDevice const* tvDevice = dynamic_cast<TVDevice *>(device);
-    
-    // edge case
-    if(0 > tvDevice->GetMovie()->GetCurrentDuration() - FAST_REWIND)
-        tvDevice->GetMovie()->SetCurrentDuration(0);
-    else 
-        tvDevice->GetMovie()->SetCurrentDuration(tvDevice->GetMovie()->GetCurrentDuration() - FAST_REWIND);
+// rewinds 1/4 of a minute
+double TVRemote::FastRewind(Device *device) {
+  TVDevice const *tvDevice = dynamic_cast<TVDevice *>(device);
 
-    return tvDevice->GetMovie()->GetCurrentDuration();
+  // edge case
+  if (0 > tvDevice->GetMovie()->GetCurrentDuration() - FAST_REWIND)
+    tvDevice->GetMovie()->SetCurrentDuration(0);
+  else
+    tvDevice->GetMovie()->SetCurrentDuration(
+        tvDevice->GetMovie()->GetCurrentDuration() - FAST_REWIND);
+
+  return tvDevice->GetMovie()->GetCurrentDuration();
 }
 
 // rewinds 1 minute
-double TVRemote::Rewind(Device * device) {   
-    TVDevice const* tvDevice = dynamic_cast<TVDevice *>(device);
-    
-    // edge case
-    if(0 > tvDevice->GetMovie()->GetCurrentDuration() - REWIND)
-        tvDevice->GetMovie()->SetCurrentDuration(0); 
-    else 
-        tvDevice->GetMovie()->SetCurrentDuration(tvDevice->GetMovie()->GetCurrentDuration() - REWIND);
+double TVRemote::Rewind(Device *device) {
+  TVDevice const *tvDevice = dynamic_cast<TVDevice *>(device);
 
-    return tvDevice->GetMovie()->GetCurrentDuration();
+  // edge case
+  if (0 > tvDevice->GetMovie()->GetCurrentDuration() - REWIND)
+    tvDevice->GetMovie()->SetCurrentDuration(0);
+  else
+    tvDevice->GetMovie()->SetCurrentDuration(
+        tvDevice->GetMovie()->GetCurrentDuration() - REWIND);
+
+  return tvDevice->GetMovie()->GetCurrentDuration();
 }
 
 // skips 1/4 of a minute
-double TVRemote::FastForward(Device * device) {
-    TVDevice const* tvDevice = dynamic_cast<TVDevice *>(device);
+double TVRemote::FastForward(Device *device) {
+  TVDevice const *tvDevice = dynamic_cast<TVDevice *>(device);
 
-    // edge case
-    if(tvDevice->GetMovie()->GetTotalDuration() < tvDevice->GetMovie()->GetCurrentDuration() + FAST_FORWARD)
-        tvDevice->GetMovie()->SetCurrentDuration(tvDevice->GetMovie()->GetTotalDuration());
-    else
-        tvDevice->GetMovie()->SetCurrentDuration(tvDevice->GetMovie()->GetCurrentDuration() + FAST_FORWARD);
+  // edge case
+  if (tvDevice->GetMovie()->GetTotalDuration() <
+      tvDevice->GetMovie()->GetCurrentDuration() + FAST_FORWARD)
+    tvDevice->GetMovie()->SetCurrentDuration(
+        tvDevice->GetMovie()->GetTotalDuration());
+  else
+    tvDevice->GetMovie()->SetCurrentDuration(
+        tvDevice->GetMovie()->GetCurrentDuration() + FAST_FORWARD);
 
-    return tvDevice->GetMovie()->GetCurrentDuration();
+  return tvDevice->GetMovie()->GetCurrentDuration();
 }
 
 // =============== Client Code ===============
 // increases/decreases channel to requested new channel
-static void ChangeChannelTo(Remote * remote, int changeChannelTo) {
-    do
-    {
-        if(remote->GetDevice()->GetChannel() < changeChannelTo)
-            remote->GetDevice()->SetChannel(remote->ChannelUp(remote->GetDevice()));
-        else
-            remote->GetDevice()->SetChannel(remote->ChannelDown(remote->GetDevice()));
+static void ChangeChannelTo(Remote *remote, int changeChannelTo) {
+  do {
+    if (remote->GetDevice()->GetChannel() < changeChannelTo)
+      remote->GetDevice()->SetChannel(remote->ChannelUp(remote->GetDevice()));
+    else
+      remote->GetDevice()->SetChannel(remote->ChannelDown(remote->GetDevice()));
 
-        std::cout << remote->GetDevice()->GetChannel() << std::endl;
-    }
-    while(remote->GetDevice()->GetChannel() != changeChannelTo);
+    std::cout << remote->GetDevice()->GetChannel() << std::endl;
+  } while (remote->GetDevice()->GetChannel() != changeChannelTo);
 }
 
 // increases/decreases volume to requested new volume
-static void ChangeVolumeTo(Remote * remote, int changeVolumeTo) {
-    do
-    {
-        if(remote->GetDevice()->GetVolume() < changeVolumeTo)
-            remote->GetDevice()->SetVolume(remote->VolumeUp(remote->GetDevice()));
-        else
-            remote->GetDevice()->SetVolume(remote->VolumeDown(remote->GetDevice()));
+static void ChangeVolumeTo(Remote *remote, int changeVolumeTo) {
+  do {
+    if (remote->GetDevice()->GetVolume() < changeVolumeTo)
+      remote->GetDevice()->SetVolume(remote->VolumeUp(remote->GetDevice()));
+    else
+      remote->GetDevice()->SetVolume(remote->VolumeDown(remote->GetDevice()));
 
-        std::cout << remote->GetDevice()->GetVolume() << std::endl;
-    }
-    while(remote->GetDevice()->GetVolume() != changeVolumeTo);
+    std::cout << remote->GetDevice()->GetVolume() << std::endl;
+  } while (remote->GetDevice()->GetVolume() != changeVolumeTo);
 }
 
 // =============== Main ===============
-int main()
-{
-    Device * radioDevice = new RadioDevice();
-    Remote * radioRemote = new Remote(radioDevice);
+int main() {
+  Device *radioDevice = new RadioDevice();
+  Remote *radioRemote = new Remote(radioDevice);
 
-    radioRemote->TogglePower(radioRemote->GetDevice());
-    radioRemote->ToggleMute(radioRemote->GetDevice());
-    ChangeVolumeTo(radioRemote, 4);
-    ChangeChannelTo(radioRemote, 10);
+  radioRemote->TogglePower(radioRemote->GetDevice());
+  radioRemote->ToggleMute(radioRemote->GetDevice());
+  ChangeVolumeTo(radioRemote, 4);
+  ChangeChannelTo(radioRemote, 10);
 
-    delete radioDevice;
-    delete radioRemote;
+  delete radioDevice;
+  delete radioRemote;
 
-    Movie * movie = new Movie("C++ is Awesome: The Movie", 50, 90);
-    TVDevice * tvDevice = new TVDevice(movie);
-    TVRemote * tvRemote = new TVRemote(tvDevice);
- 
-    tvRemote->TogglePower(tvRemote->GetDevice());
-    tvRemote->ToggleMute(tvRemote->GetDevice());
-    tvRemote->TogglePlay(tvRemote->GetDevice());
-    ChangeVolumeTo(tvRemote, 7);
-    ChangeChannelTo(tvRemote, 50);
+  Movie *movie = new Movie("C++ is Awesome: The Movie", 50, 90);
+  TVDevice *tvDevice = new TVDevice(movie);
+  TVRemote *tvRemote = new TVRemote(tvDevice);
 
-    // changing movie time
-    tvRemote->FastRewind(tvDevice);
-    std::cout << "Current device: " << tvDevice->GetMovie()->GetCurrentDuration() << std::endl;
-    tvRemote->FastForward(tvDevice);
-    std::cout << "Current device: " << tvDevice->GetMovie()->GetCurrentDuration() << std::endl;
-    tvRemote->Rewind(tvDevice);
-    std::cout << "Current device: " << tvDevice->GetMovie()->GetCurrentDuration() << std::endl;
+  tvRemote->TogglePower(tvRemote->GetDevice());
+  tvRemote->ToggleMute(tvRemote->GetDevice());
+  tvRemote->TogglePlay(tvRemote->GetDevice());
+  ChangeVolumeTo(tvRemote, 7);
+  ChangeChannelTo(tvRemote, 50);
 
-    delete movie;
-    delete tvDevice;
-    delete tvRemote;
+  // changing movie time
+  tvRemote->FastRewind(tvDevice);
+  std::cout << "Current device: " << tvDevice->GetMovie()->GetCurrentDuration()
+            << std::endl;
+  tvRemote->FastForward(tvDevice);
+  std::cout << "Current device: " << tvDevice->GetMovie()->GetCurrentDuration()
+            << std::endl;
+  tvRemote->Rewind(tvDevice);
+  std::cout << "Current device: " << tvDevice->GetMovie()->GetCurrentDuration()
+            << std::endl;
 
-    return 0;
+  delete movie;
+  delete tvDevice;
+  delete tvRemote;
+
+  return 0;
 }

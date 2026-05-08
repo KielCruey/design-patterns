@@ -1,97 +1,74 @@
+#include "state.hpp"
+
 #include <iostream>
 #include <string>
 
-#include "state.hpp"
-
-void printToConsole(const std::string& toConsole) {
-	std::cout << toConsole << std::endl;
+void printToConsole(const std::string &toConsole) {
+  std::cout << toConsole << std::endl;
 }
 
 // ======== Mood ========
-Mood::Mood(Boss * boss) :
-	boss(boss)
-{ }
+Mood::Mood(Boss *boss) : boss(boss) {}
 
 // ======== Boss ========
-Boss::Boss(Mood * mood) :
-	mood(nullptr)
-{
-	// makes boss in a default mood
-	this->TransitionMood(mood);
+Boss::Boss(Mood *mood) : mood(nullptr) {
+  // makes boss in a default mood
+  this->TransitionMood(mood);
 }
 
-Boss::~Boss() {
-	delete mood;
+Boss::~Boss() { delete mood; }
+
+Boss::Boss(const Boss &boss) : mood(boss.mood) {}
+
+Boss &Boss::operator=(const Boss &boss) {
+  if (boss.mood != nullptr)
+    this->mood = boss.mood;
+
+  return *this;
 }
 
-Boss::Boss(const Boss& boss) 
-	: mood(boss.mood)
-{ }
+void Boss::helpMe() { getMood()->helpMe(); }
 
-Boss& Boss::operator=(const Boss& boss) {
-	if(boss.mood != nullptr) this->mood = boss.mood;
+void Boss::directMe() { getMood()->directMe(); }
 
-	return *this;
-}
+void Boss::TransitionMood(Mood *mood) {
+  // protects the default constructor to change the class
+  if (this->getMood() != nullptr) {
+    // deletes the old heap "state"
+    delete this->mood;
+  }
 
-void Boss::helpMe() {
-	getMood()->helpMe();
-}
-
-void Boss::directMe() {
-	getMood()->directMe();
-}
-
-void Boss::TransitionMood(Mood * mood) {
-	// protects the default constructor to change the class
-	if (this->getMood() != nullptr) {
-		// deletes the old heap "state"
-		delete this->mood;
-	}
-
-	setMood(mood);
+  setMood(mood);
 }
 
 // ======== BadMood ========
-void BadMood::helpMe() {
-	printToConsole("BadMood - Help Me!");
-}
+void BadMood::helpMe() { printToConsole("BadMood - Help Me!"); }
 
-void BadMood::directMe() {
-	printToConsole("BadMood - Direct Me!");
-}
+void BadMood::directMe() { printToConsole("BadMood - Direct Me!"); }
 
 // ======== OkMood ========
-void OkMood::helpMe() {
-	printToConsole("OkMood - Help Me!");
-}
+void OkMood::helpMe() { printToConsole("OkMood - Help Me!"); }
 
-void OkMood::directMe() {
-	printToConsole("OkMood - Direct Me!");
-}
+void OkMood::directMe() { printToConsole("OkMood - Direct Me!"); }
 
 // ======== GoodMood ========
-void GoodMood::helpMe() {
-	printToConsole("GoodMood - Help Me!");
-}
+void GoodMood::helpMe() { printToConsole("GoodMood - Help Me!"); }
 
-void GoodMood::directMe() {
-	printToConsole("GoodMood - Direct Me!");
-}
+void GoodMood::directMe() { printToConsole("GoodMood - Direct Me!"); }
 
 // ======== Main ========
 int main() {
-	Boss * boss = new Boss(new OkMood());
-	boss->helpMe();
-	boss->directMe();
+  Boss *boss = new Boss(new OkMood());
+  boss->helpMe();
+  boss->directMe();
 
-	boss->TransitionMood(new BadMood());
-	boss->helpMe();
-	boss->directMe();
+  boss->TransitionMood(new BadMood());
+  boss->helpMe();
+  boss->directMe();
 
-	boss->TransitionMood(new GoodMood());
-	boss->helpMe();
-	boss->directMe();
+  boss->TransitionMood(new GoodMood());
+  boss->helpMe();
+  boss->directMe();
 
-	return 0;
+  return 0;
 }

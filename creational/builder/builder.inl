@@ -1,24 +1,18 @@
 // ============ Car ============
-inline std::string Car::GetMake() const {
-    return this->make;
-}
+inline std::string Car::GetMake() const { return this->make; }
 
-inline std::string Car::GetModel() const {
-    return this->model;
-}
+inline std::string Car::GetModel() const { return this->model; }
 
 // ============ ConcreteCarBuilder ============
-inline void ConcreteCarBuilder::SetCar(Car* car) {
-    this->car = car;
-}
+inline void ConcreteCarBuilder::SetCar(Car *car) { this->car = car; }
 
-inline Car* ConcreteCarBuilder::GetCar() {
-    Car* result = this->car;
-    CreateCar();
-    return result;
+inline Car *ConcreteCarBuilder::GetCar() {
+  Car *result = this->car;
+  CreateCar();
+  return result;
 }
 
 // ============ Director ============
-inline void CarDirector::SetBuilder(CarBuilder* carBuilder) {
-    this->carBuilder = carBuilder;
+inline void CarDirector::SetBuilder(CarBuilder *carBuilder) {
+  this->carBuilder = carBuilder;
 }

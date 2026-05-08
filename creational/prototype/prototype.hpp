@@ -1,9 +1,11 @@
 // For the prototype design pattern, the use of the copy constructs is a must.
-// That's the mechanism that clones the same instance of already initialized object.
-// It appears that using the 'rule of three' would be good enough for the prototype design pattern.
+// That's the mechanism that clones the same instance of already initialized
+// object. It appears that using the 'rule of three' would be good enough for
+// the prototype design pattern.
 
-// The use of deep copy is important, because creating a new object with own independent member variables.
-// This is true if you use pointers for your member variables, deep copy is required.
+// The use of deep copy is important, because creating a new object with own
+// independent member variables. This is true if you use pointers for your
+// member variables, deep copy is required.
 // https://stackoverflow.com/questions/33142935/prototype-design-pattern-example-c
 
 #include <iostream>
@@ -11,80 +13,73 @@
 #include <unordered_map>
 
 // helpful enum to determine what the derived class type is
-enum RobotTypes {
-    MILITARY = 0,
-    CIVILIAN
-};
+enum RobotTypes { MILITARY = 0, CIVILIAN };
 
 // ============== Abstract Product ==============
-class RobotPrototype
-{
+class RobotPrototype {
 public:
-    RobotPrototype(int serialNumber = 0);
-    virtual ~RobotPrototype();
+  RobotPrototype(int serialNumber = 0);
+  virtual ~RobotPrototype();
 
-    virtual RobotPrototype * Clone() const = 0; // creates heap memory robot
-    virtual void PrintInfo(); // prints all member variables
+  virtual RobotPrototype *Clone() const = 0; // creates heap memory robot
+  virtual void PrintInfo();                  // prints all member variables
 
-    // getters/setters
-    inline virtual int GetRobotType() = 0;
+  // getters/setters
+  inline virtual int GetRobotType() = 0;
 
-    inline int GetSerialNumber() const;
+  inline int GetSerialNumber() const;
 
 private:
-    int serialNumber;
+  int serialNumber;
 };
 
 // ============== Concrete Product ==============
-class ConcreteCivilianRobotPrototype : public RobotPrototype
-{
+class ConcreteCivilianRobotPrototype : public RobotPrototype {
 public:
-    ConcreteCivilianRobotPrototype(int serialNumber, const std::string& name);
-    ~ConcreteCivilianRobotPrototype() override;
+  ConcreteCivilianRobotPrototype(int serialNumber, const std::string &name);
+  ~ConcreteCivilianRobotPrototype() override;
 
-    RobotPrototype * Clone() const override; // creates heap memory robot
-    
-    void PrintInfo() override; // prints all member variables
+  RobotPrototype *Clone() const override; // creates heap memory robot
 
-    // getters/setters 
-    inline int GetRobotType() override;
+  void PrintInfo() override; // prints all member variables
 
-    inline std::string GetName();
+  // getters/setters
+  inline int GetRobotType() override;
+
+  inline std::string GetName();
 
 private:
-    std::string name; 
+  std::string name;
 };
 
-class ConcreteMilitaryRobotPrototype : public RobotPrototype
-{
+class ConcreteMilitaryRobotPrototype : public RobotPrototype {
 public:
-    ConcreteMilitaryRobotPrototype(int serialNumber, const std::string& rank);
-    ~ConcreteMilitaryRobotPrototype() override;
+  ConcreteMilitaryRobotPrototype(int serialNumber, const std::string &rank);
+  ~ConcreteMilitaryRobotPrototype() override;
 
-    RobotPrototype * Clone() const override; // creates heap memory robot
-    
-    void PrintInfo() override; // prints all member variables
+  RobotPrototype *Clone() const override; // creates heap memory robot
 
-    // getters/setters 
-    inline int GetRobotType() override;
+  void PrintInfo() override; // prints all member variables
 
-    inline std::string GetRank();
+  // getters/setters
+  inline int GetRobotType() override;
+
+  inline std::string GetRank();
 
 private:
-    std::string rank;
+  std::string rank;
 };
 
 // ============== Factory ==============
-class PrototypeFactory
-{
+class PrototypeFactory {
 private:
-    std::unordered_map<RobotTypes, RobotPrototype *> robotMap;
+  std::unordered_map<RobotTypes, RobotPrototype *> robotMap;
 
 public:
-    PrototypeFactory();
-    ~PrototypeFactory();
+  PrototypeFactory();
+  ~PrototypeFactory();
 
-    RobotPrototype * CreatePrototype(RobotTypes rType);
+  RobotPrototype *CreatePrototype(RobotTypes rType);
 };
 
 #include "prototype.inl"
