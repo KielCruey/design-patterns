@@ -1,50 +1,45 @@
 #include <memory> // unique_ptr
-#include <vector>
 #include <string>
-
+#include <vector>
 
 // ========== Abstract Strategy ==========
-class iAlgorithmStrategy
-{
+class iAlgorithmStrategy {
 public:
-	~iAlgorithmStrategy() = default;
+  ~iAlgorithmStrategy() = default;
 
-	virtual std::vector<int>* doAlgorithm(std::vector<int>* data) = 0;
+  virtual std::vector<int> *doAlgorithm(std::vector<int> *data) = 0;
 };
 
 // ========== Concrete Strategy ==========
-class IncreasingSort : public iAlgorithmStrategy
-{
+class IncreasingSort : public iAlgorithmStrategy {
 public:
-	std::vector<int>* doAlgorithm(std::vector<int>* data) override;
+  std::vector<int> *doAlgorithm(std::vector<int> *data) override;
 };
 
-class DecreasingSort : public iAlgorithmStrategy
-{
+class DecreasingSort : public iAlgorithmStrategy {
 public:
-	std::vector<int>* doAlgorithm(std::vector<int>* data) override;
+  std::vector<int> *doAlgorithm(std::vector<int> *data) override;
 };
 
-class Data
-{
+class Data {
 public:
-	explicit Data(std::vector<int>* data = nullptr);
-	explicit Data(std::unique_ptr<iAlgorithmStrategy>&& strategy);
-	~Data();
+  explicit Data(std::vector<int> *data = nullptr);
+  explicit Data(std::unique_ptr<iAlgorithmStrategy> &&strategy);
+  ~Data();
 
-	Data(Data& data); // copy constructor
-	Data& operator= (Data& data); // copy assignment
+  Data(Data &data);            // copy constructor
+  Data &operator=(Data &data); // copy assignment
 
-	void doAlgorithm(std::vector<int>* data);
+  void doAlgorithm(std::vector<int> *data);
 
-	inline void setStrategy(std::unique_ptr<iAlgorithmStrategy>&& strategy);
-	inline void setVector(std::vector<int>* data);
+  inline void setStrategy(std::unique_ptr<iAlgorithmStrategy> &&strategy);
+  inline void setVector(std::vector<int> *data);
 
-	std::vector<int>* sort();
+  std::vector<int> *sort();
 
 private:
-	std::unique_ptr<iAlgorithmStrategy> strategy;
-	std::vector<int>* data;
+  std::unique_ptr<iAlgorithmStrategy> strategy;
+  std::vector<int> *data;
 };
 
 #include "stragey.inl"

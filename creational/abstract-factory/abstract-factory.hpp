@@ -2,77 +2,70 @@
 #include <string>
 
 // ============ ABSTRACT PRODUCT ============
-class AbstractPerson
-{
+class AbstractPerson {
 public:
-    virtual ~AbstractPerson() = default;
+  virtual ~AbstractPerson() = default;
 
-    virtual void Attack() = 0;
-    virtual void CheckHealth() = 0;
+  virtual void Attack() = 0;
+  virtual void CheckHealth() = 0;
 };
 
-// ============ CONCRETE PRODUCTS -- will be created by concrete factories ============
-class ConcreteSoldier : public AbstractPerson
-{ 
+// ============ CONCRETE PRODUCTS -- will be created by concrete factories
+// ============
+class ConcreteSoldier : public AbstractPerson {
 public:
-    ConcreteSoldier();
-    ~ConcreteSoldier() override;
+  ConcreteSoldier();
+  ~ConcreteSoldier() override;
 
-    void Attack() override;
-    void CheckHealth() override;
+  void Attack() override;
+  void CheckHealth() override;
 };
 
-class ConcreteArcher : public AbstractPerson
-{
+class ConcreteArcher : public AbstractPerson {
 public:
-    ConcreteArcher();
-    ~ConcreteArcher() override;
+  ConcreteArcher();
+  ~ConcreteArcher() override;
 
-    void Attack() override;
-    void CheckHealth() override;
+  void Attack() override;
+  void CheckHealth() override;
 };
 
-class ConcreteCalvary : public AbstractPerson
-{
+class ConcreteCalvary : public AbstractPerson {
 public:
-    ConcreteCalvary();
-    ~ConcreteCalvary() override;
+  ConcreteCalvary();
+  ~ConcreteCalvary() override;
 
-    void Attack() override;
-    void CheckHealth() override;
+  void Attack() override;
+  void CheckHealth() override;
 };
 
 // ============ ABSTRACT FACTORY ============
-class AbstractRaceFactory
-{
+class AbstractRaceFactory {
 public:
-    virtual ~AbstractRaceFactory() = default;
-    
-    virtual AbstractPerson * MakeSoldier() = 0;
-    virtual AbstractPerson * MakeArcher() = 0;
-    virtual AbstractPerson * MakeCalvary() = 0;
+  virtual ~AbstractRaceFactory() = default;
+
+  virtual AbstractPerson *MakeSoldier() = 0;
+  virtual AbstractPerson *MakeArcher() = 0;
+  virtual AbstractPerson *MakeCalvary() = 0;
 };
 
 // ============ CONCRETE FACTORIES ============
-class ConcreteHumanFactory : public AbstractRaceFactory
-{
+class ConcreteHumanFactory : public AbstractRaceFactory {
 public:
-    ConcreteHumanFactory();
-    ~ConcreteHumanFactory() override;
+  ConcreteHumanFactory();
+  ~ConcreteHumanFactory() override;
 
-    AbstractPerson * MakeSoldier() override;
-    AbstractPerson * MakeArcher() override;
-    AbstractPerson * MakeCalvary() override;
+  AbstractPerson *MakeSoldier() override;
+  AbstractPerson *MakeArcher() override;
+  AbstractPerson *MakeCalvary() override;
 };
 
-class ConcreteOrcFactory : public AbstractRaceFactory
-{
+class ConcreteOrcFactory : public AbstractRaceFactory {
 public:
-    ConcreteOrcFactory();
-    ~ConcreteOrcFactory() override;
+  ConcreteOrcFactory();
+  ~ConcreteOrcFactory() override;
 
-    AbstractPerson * MakeSoldier() override;
-    AbstractPerson * MakeArcher() override;
-    AbstractPerson * MakeCalvary() override;
+  AbstractPerson *MakeSoldier() override;
+  AbstractPerson *MakeArcher() override;
+  AbstractPerson *MakeCalvary() override;
 };
-

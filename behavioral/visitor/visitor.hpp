@@ -1,92 +1,85 @@
 class iShapeVisitor;
 
 // ========= element =========
-class iShape
-{
+class iShape {
 public:
-    virtual void accept(iShapeVisitor* visitor) = 0;
+  virtual void accept(iShapeVisitor *visitor) = 0;
 };
 
 // ========= concrete elements =========
-class Ring : public iShape
-{
+class Ring : public iShape {
 public:
-    explicit Ring(double radius = 1); 
-    
-    void accept(iShapeVisitor* visitor) override;
+  explicit Ring(double radius = 1);
 
-    inline double getRadius() const;
+  void accept(iShapeVisitor *visitor) override;
+
+  inline double getRadius() const;
 
 private:
-    double radius;
+  double radius;
 };
 
-class Square : public iShape
-{
+class Square : public iShape {
 public:
-	explicit Square(double side = 1);
+  explicit Square(double side = 1);
 
-	void accept(iShapeVisitor* visitor) override;
+  void accept(iShapeVisitor *visitor) override;
 
-    inline double getSide() const;
+  inline double getSide() const;
 
 private:
-	double side;
+  double side;
 };
 
-class Rectangle : public iShape
-{
+class Rectangle : public iShape {
 public:
-	explicit Rectangle(double length = 1, double width = 1);
+  explicit Rectangle(double length = 1, double width = 1);
 
-	void accept(iShapeVisitor* visitor) override;
+  void accept(iShapeVisitor *visitor) override;
 
-    inline double getLength() const;
-    inline double getWidth() const;
+  inline double getLength() const;
+  inline double getWidth() const;
 
 private:
-	double length;
-	double width;
+  double length;
+  double width;
 };
 
 // ========= visitor =========
-class iShapeVisitor
-{
+class iShapeVisitor {
 public:
-    virtual void visit(Ring* Ring) = 0;
-    virtual void visit(Square* square) = 0;
-    virtual void visit(Rectangle* rectangle) = 0;
+  virtual void visit(Ring *Ring) = 0;
+  virtual void visit(Square *square) = 0;
+  virtual void visit(Rectangle *rectangle) = 0;
 };
 
 // ========= concrete vistor =========
-class AreaVisitor : public iShapeVisitor
-{
+class AreaVisitor : public iShapeVisitor {
 public:
-    explicit AreaVisitor(double area = 0);
+  explicit AreaVisitor(double area = 0);
 
-    void visit(Ring* Ring) override;
-    void visit(Square* square) override;
-    void visit(Rectangle* rectangle) override;
+  void visit(Ring *Ring) override;
+  void visit(Square *square) override;
+  void visit(Rectangle *rectangle) override;
 
-    inline double getArea() const;
+  inline double getArea() const;
 
 private:
-    double area;
+  double area;
 };
 
-class PerimeterVisitor : public iShapeVisitor
-{
+class PerimeterVisitor : public iShapeVisitor {
 public:
-    explicit PerimeterVisitor(double perimeter = 0);
+  explicit PerimeterVisitor(double perimeter = 0);
 
-    void visit(Ring* Ring) override;
-    void visit(Square* square) override;
-    void visit(Rectangle* rectangle) override;
+  void visit(Ring *Ring) override;
+  void visit(Square *square) override;
+  void visit(Rectangle *rectangle) override;
 
-    inline double getPerimeter() const;
+  inline double getPerimeter() const;
 
 private:
-    double perimeter;
+  double perimeter;
 };
 
 #include "visitor.inl"

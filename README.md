@@ -27,11 +27,11 @@ cppcheck --enable=all *.cpp *.hpp *.inl // all files in repo
 This creates a report by hand.
 
 However for creating a text report via .txt file, replace <file name> with whatever file you want it:
-``` shell
+``` bash
 cppcheck --suppress=missingIncludeSystem --suppress=toomanyconfigs --error-exitcode=1 --enable=all --output-file=cppcheck-report.txt .
 ```
 after running the following command the output of cppcheck will be 1 if there are warnings given or 0 if there aren't any errors. Run the following to see what the output is:
-``` shell
+``` bash
 echo $? // prints out exit status
 ```
 
@@ -60,6 +60,13 @@ Use the following commands to configure and build CMake artifacts:
 $ cmake -G "MinGW Makefiles" -B build -S . # config/generation stage
 $ cmake --build build # build stage
 ```
+
+## Clang-Format
+Clang-Format helps with editing the code with the same look and feel for all the files.
+``` bash
+$ find . -iname "*.cpp" -o -iname "*.hpp" -o -iname "*.inl" | xargs clang-format -i
+```
+Command will find all the files with .cpp, .hpp, and .inl file extension in the repository, and pipe those files into the clang-format.
 
 # Design Pattern Resources
 ## Behavior Patterns

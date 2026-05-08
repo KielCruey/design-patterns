@@ -1,99 +1,57 @@
 // ============= Movie =============
 inline void Movie::SetCurrentDuration(double currentDuration) {
-    this->currentDuration = currentDuration;
+  this->currentDuration = currentDuration;
 }
 
-inline std::string Movie::GetName() const {
-    return this->name;
-}
+inline std::string Movie::GetName() const { return this->name; }
 
 inline double Movie::GetCurrentDuration() const {
-    return this->currentDuration;
+  return this->currentDuration;
 }
 
-inline double Movie::GetTotalDuration() const {
-    return this->totalDuration;
-}
+inline double Movie::GetTotalDuration() const { return this->totalDuration; }
 
 // ============= TVDevice =============
-void TVDevice::SetIsPlaying(bool isPlaying) {
-    this->isPlaying = isPlaying;
-}
+void TVDevice::SetIsPlaying(bool isPlaying) { this->isPlaying = isPlaying; }
 
-inline void TVDevice::SetIsMuted(bool isMuted) {
-    this->isMuted = isMuted;
-}
+inline void TVDevice::SetIsMuted(bool isMuted) { this->isMuted = isMuted; }
 
-inline void TVDevice::SetPower(bool isPowered) {
-    this->isPowered = isPowered;
-}
+inline void TVDevice::SetPower(bool isPowered) { this->isPowered = isPowered; }
 
-inline void TVDevice::SetVolume(int volume) {
-    this->volume = volume;
-}
+inline void TVDevice::SetVolume(int volume) { this->volume = volume; }
 
-inline void TVDevice::SetChannel(int channel) {
-    this->channel = channel;
-}
+inline void TVDevice::SetChannel(int channel) { this->channel = channel; }
 
-inline Movie* TVDevice::GetMovie() const {
-    return this->movie;
-}
+inline Movie *TVDevice::GetMovie() const { return this->movie; }
 
-inline bool TVDevice::GetIsPlaying() const {
-    return this->isPlaying;
-}
+inline bool TVDevice::GetIsPlaying() const { return this->isPlaying; }
 
-inline bool TVDevice::GetIsMuted() const {
-    return this->isMuted;
-}
+inline bool TVDevice::GetIsMuted() const { return this->isMuted; }
 
-inline bool TVDevice::GetPower() const {
-    return this->isPowered;
-}
+inline bool TVDevice::GetPower() const { return this->isPowered; }
 
-inline int TVDevice::GetVolume() const {
-    return this->volume;
-}
+inline int TVDevice::GetVolume() const { return this->volume; }
 
-inline int TVDevice::GetChannel() const {
-    return this->channel;
-}
+inline int TVDevice::GetChannel() const { return this->channel; }
 
 // ============= RadioDevice =============
-inline void RadioDevice::SetIsMuted(bool isMuted) {
-    this->isMuted = isMuted;
-}
+inline void RadioDevice::SetIsMuted(bool isMuted) { this->isMuted = isMuted; }
 
 inline void RadioDevice::SetPower(bool isPowered) {
-    this->isPowered = isPowered;
+  this->isPowered = isPowered;
 }
 
-inline void RadioDevice::SetVolume(int volume) {
-    this->volume = volume;
-}
+inline void RadioDevice::SetVolume(int volume) { this->volume = volume; }
 
-inline void RadioDevice::SetChannel(int channel) {
-    this->channel = channel;
-}
+inline void RadioDevice::SetChannel(int channel) { this->channel = channel; }
 
-inline bool RadioDevice::GetIsMuted() const {
-    return this->isMuted;
-}
+inline bool RadioDevice::GetIsMuted() const { return this->isMuted; }
 
-inline bool RadioDevice::GetPower() const {
-    return this->isPowered;
-}
+inline bool RadioDevice::GetPower() const { return this->isPowered; }
 
-inline int RadioDevice::GetVolume() const {
-    return this->volume;
-}
+inline int RadioDevice::GetVolume() const { return this->volume; }
 
-inline int RadioDevice::GetChannel() const {
-    return this->channel;
-}
+inline int RadioDevice::GetChannel() const { return this->channel; }
 
 // ============= Abstraction =============
-inline Device* Remote::GetDevice() const {
-    return this->device;
-}
+inline Device *Remote::GetDevice() const { return this->device; }

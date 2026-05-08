@@ -1,272 +1,232 @@
 #include "template-method.hpp"
 
-static void printToConsole(const std::string& toConsole) {
-	std::cout << toConsole << std::endl;
+static void printToConsole(const std::string &toConsole) {
+  std::cout << toConsole << std::endl;
 }
 
 // =========== Extras ===========
-Extras::Extras(int sugarShot,
-				int creamShot,
-				int milkShot,
-				int chocolateShot) :
-	sugarShot(sugarShot),
-	creamShot(creamShot),
-	milkShot(milkShot),
-	chocolateShot(chocolateShot)
-{ }
+Extras::Extras(int sugarShot, int creamShot, int milkShot, int chocolateShot)
+    : sugarShot(sugarShot), creamShot(creamShot), milkShot(milkShot),
+      chocolateShot(chocolateShot) {}
 
 // =========== Teas ===========
-Teas::Teas(int greenTea,
-			int blackTea,
-			int chiaTea) :
-	greenTea(greenTea),
-	blackTea(blackTea),
-	chiaTea(chiaTea)
-{ }
+Teas::Teas(int greenTea, int blackTea, int chiaTea)
+    : greenTea(greenTea), blackTea(blackTea), chiaTea(chiaTea) {}
 
 // =========== Coffees ===========
-Coffees::Coffees(int lightRoast,
-		int mediumRoast,
-		int darkRoast) :
-	lightRoast(lightRoast),
-	mediumRoast(mediumRoast),
-	darkRoast(darkRoast)
-{ }
+Coffees::Coffees(int lightRoast, int mediumRoast, int darkRoast)
+    : lightRoast(lightRoast), mediumRoast(mediumRoast), darkRoast(darkRoast) {}
 
 // =========== BeverageMaker ===========`
-BeverageMaker::BeverageMaker(const Extras* extras,
-							const Teas* teas,
-							const Coffees* coffees,
-							int cups,
-							double waterAmount) :
-	extras(new Extras(*extras)),
-	teas(new Teas(*teas)),
-	coffees(new Coffees(*coffees)),
-	cups(cups),
-	waterAmount(waterAmount)
-{
-	printToConsole("BeverageMaker created");
+BeverageMaker::BeverageMaker(const Extras *extras, const Teas *teas,
+                             const Coffees *coffees, int cups,
+                             double waterAmount)
+    : extras(new Extras(*extras)), teas(new Teas(*teas)),
+      coffees(new Coffees(*coffees)), cups(cups), waterAmount(waterAmount) {
+  printToConsole("BeverageMaker created");
 }
 
 BeverageMaker::~BeverageMaker() {
-	delete extras;
+  delete extras;
 
-	// only TeaMaker class needs to delete
-	if (this->teas != nullptr) {
-		delete teas;
-	}
+  // only TeaMaker class needs to delete
+  if (this->teas != nullptr) {
+    delete teas;
+  }
 
-	if (this->coffees != nullptr) {
-		delete coffees;
-	}
+  if (this->coffees != nullptr) {
+    delete coffees;
+  }
 
-	printToConsole("BeverageMaker deleted");
+  printToConsole("BeverageMaker deleted");
 }
 
-BeverageMaker::BeverageMaker(const BeverageMaker& bMaker)
-	: extras(bMaker.extras), teas(bMaker.teas), coffees(bMaker.coffees), cups(bMaker.cups), waterAmount(bMaker.waterAmount)
-{ }
+BeverageMaker::BeverageMaker(const BeverageMaker &bMaker)
+    : extras(bMaker.extras), teas(bMaker.teas), coffees(bMaker.coffees),
+      cups(bMaker.cups), waterAmount(bMaker.waterAmount) {}
 
-BeverageMaker& BeverageMaker::operator=(const BeverageMaker& bMaker) {
-	this->extras = bMaker.extras;
-	this->teas = bMaker.teas;
-	this->coffees = bMaker.coffees;
-	this->cups = bMaker.cups;
-	this->waterAmount = bMaker.waterAmount;
+BeverageMaker &BeverageMaker::operator=(const BeverageMaker &bMaker) {
+  this->extras = bMaker.extras;
+  this->teas = bMaker.teas;
+  this->coffees = bMaker.coffees;
+  this->cups = bMaker.cups;
+  this->waterAmount = bMaker.waterAmount;
 
-	return *this;
+  return *this;
 }
 
 void BeverageMaker::restockExtras() {
-	getExtras()->setSugarShot(MAX_EXTRAS_AMOUNT);
-	getExtras()->setCreamShot(MAX_EXTRAS_AMOUNT);
-	getExtras()->setMilkShot(MAX_EXTRAS_AMOUNT);
-	getExtras()->setChocolateShot(MAX_EXTRAS_AMOUNT);
+  getExtras()->setSugarShot(MAX_EXTRAS_AMOUNT);
+  getExtras()->setCreamShot(MAX_EXTRAS_AMOUNT);
+  getExtras()->setMilkShot(MAX_EXTRAS_AMOUNT);
+  getExtras()->setChocolateShot(MAX_EXTRAS_AMOUNT);
 
-	printToConsole("Restocked extras");
+  printToConsole("Restocked extras");
 }
 
 void BeverageMaker::restockTeas() {
-	getTeas()->setGreenTea(MAX_BEVERAGE_AMOUNT);
-	getTeas()->setBlackTea(MAX_BEVERAGE_AMOUNT);
-	getTeas()->setChiaTea(MAX_BEVERAGE_AMOUNT);
+  getTeas()->setGreenTea(MAX_BEVERAGE_AMOUNT);
+  getTeas()->setBlackTea(MAX_BEVERAGE_AMOUNT);
+  getTeas()->setChiaTea(MAX_BEVERAGE_AMOUNT);
 
-	printToConsole("Restocked teas");
+  printToConsole("Restocked teas");
 }
 
 void BeverageMaker::restockCoffees() {
-	getCoffees()->setLightRoast(MAX_BEVERAGE_AMOUNT);
-	getCoffees()->setMediumRoast(MAX_BEVERAGE_AMOUNT);
-	getCoffees()->setDarkRoast(MAX_BEVERAGE_AMOUNT);
+  getCoffees()->setLightRoast(MAX_BEVERAGE_AMOUNT);
+  getCoffees()->setMediumRoast(MAX_BEVERAGE_AMOUNT);
+  getCoffees()->setDarkRoast(MAX_BEVERAGE_AMOUNT);
 
-	printToConsole("Restocked coffees");
+  printToConsole("Restocked coffees");
 }
 
 void BeverageMaker::placeCup() {
-	setCups(getCups() - 1);
+  setCups(getCups() - 1);
 
-	printToConsole("Cup placed");
+  printToConsole("Cup placed");
 }
 
-void BeverageMaker::boilWater() {
-	printToConsole("Water boiled");
-}
+void BeverageMaker::boilWater() { printToConsole("Water boiled"); }
 
 void BeverageMaker::pourInCup() {
-	setWaterAmount(getWaterAmount() - BEVERAGE_WATER);
+  setWaterAmount(getWaterAmount() - BEVERAGE_WATER);
 
-	printToConsole("Beverage poured in cup");
+  printToConsole("Beverage poured in cup");
 }
 
-void BeverageMaker::restockCups() {
-	setCups(MAX_CUPS);
-}
+void BeverageMaker::restockCups() { setCups(MAX_CUPS); }
 
-void BeverageMaker::restockWater() {
-	setWaterAmount(MAX_WATER_AMOUNT);
-}
+void BeverageMaker::restockWater() { setWaterAmount(MAX_WATER_AMOUNT); }
 
 // =========== TeaMaker ===========
-TeaMaker::TeaMaker(const Extras* extras,
-				   const Teas* teas,
-				   int cups,
-				   double waterAmount) :
-	BeverageMaker(extras, teas, nullptr, cups, waterAmount)
-{ }
+TeaMaker::TeaMaker(const Extras *extras, const Teas *teas, int cups,
+                   double waterAmount)
+    : BeverageMaker(extras, teas, nullptr, cups, waterAmount) {}
 
-TeaMaker::~TeaMaker() {
-	printToConsole("TeaMaker deleted");
-}
+TeaMaker::~TeaMaker() { printToConsole("TeaMaker deleted"); }
 
 // calls template methods
 void TeaMaker::makeBeverage(std::string beverageSelected) {
-	placeCup();
-	boilWater();
-	brew(beverageSelected);
-	pourInCup();
-	addExtras();
+  placeCup();
+  boilWater();
+  brew(beverageSelected);
+  pourInCup();
+  addExtras();
 }
 
 void TeaMaker::brew(std::string beverageSelected) {
-	if (beverageSelected == "green tea")
-		this->getTeas()->setGreenTea(this->getTeas()->getGreenTea() - 1);
-	else if (beverageSelected == "black tea")
-		this->getTeas()->setBlackTea(this->getTeas()->getBlackTea() - 1);
-	else if (beverageSelected == "chia tea")
-		this->getTeas()->setChiaTea(this->getTeas()->getChiaTea() - 1);
+  if (beverageSelected == "green tea")
+    this->getTeas()->setGreenTea(this->getTeas()->getGreenTea() - 1);
+  else if (beverageSelected == "black tea")
+    this->getTeas()->setBlackTea(this->getTeas()->getBlackTea() - 1);
+  else if (beverageSelected == "chia tea")
+    this->getTeas()->setChiaTea(this->getTeas()->getChiaTea() - 1);
 
-	printToConsole("Brewing tea");
+  printToConsole("Brewing tea");
 }
 
-void TeaMaker::addExtras() {
-	printToConsole("Tea extras added");
-}
+void TeaMaker::addExtras() { printToConsole("Tea extras added"); }
 
 // =========== CoffeeMaker ===========
-CoffeeMaker::CoffeeMaker(const Extras* extras,
-						 const Coffees* coffees,
-						 int cups,
-						 double waterAmount) :
-	BeverageMaker(extras, nullptr, coffees, cups, waterAmount)
-{ }
+CoffeeMaker::CoffeeMaker(const Extras *extras, const Coffees *coffees, int cups,
+                         double waterAmount)
+    : BeverageMaker(extras, nullptr, coffees, cups, waterAmount) {}
 
-CoffeeMaker::~CoffeeMaker() {
-	printToConsole("CoffeeMaker deleted");
-}
+CoffeeMaker::~CoffeeMaker() { printToConsole("CoffeeMaker deleted"); }
 
 // calls template methods
 void CoffeeMaker::makeBeverage(std::string beverageSelected) {
-	placeCup();
-	boilWater();
-	brew(beverageSelected);
-	pourInCup();
-	addExtras();
+  placeCup();
+  boilWater();
+  brew(beverageSelected);
+  pourInCup();
+  addExtras();
 }
 
 void CoffeeMaker::brew(std::string beverageSelected) {
-	if (beverageSelected == "light roast")
-		this->getCoffees()->setLightRoast(this->getCoffees()->getLightRoast() - 1);
-	else if (beverageSelected == "medium roast")
-		this->getCoffees()->setMediumRoast(this->getCoffees()->getMediumRoast() - 1);
-	else if (beverageSelected == "dark roast")
-		this->getCoffees()->setDarkRoast(this->getCoffees()->getDarkRoast() - 1);
+  if (beverageSelected == "light roast")
+    this->getCoffees()->setLightRoast(this->getCoffees()->getLightRoast() - 1);
+  else if (beverageSelected == "medium roast")
+    this->getCoffees()->setMediumRoast(this->getCoffees()->getMediumRoast() -
+                                       1);
+  else if (beverageSelected == "dark roast")
+    this->getCoffees()->setDarkRoast(this->getCoffees()->getDarkRoast() - 1);
 
-	printToConsole("Brewing coffee");
+  printToConsole("Brewing coffee");
 }
 
-void CoffeeMaker::addExtras() {
-	printToConsole("Coffee extras added");
-}
+void CoffeeMaker::addExtras() { printToConsole("Coffee extras added"); }
 
 // =========== Client Code ===========
-static TeaMaker * createTeaMaker() {
-	Extras * extras = new Extras();
-	Teas * teas = new Teas();
+static TeaMaker *createTeaMaker() {
+  Extras *extras = new Extras();
+  Teas *teas = new Teas();
 
-	TeaMaker * teaMaker = new TeaMaker(extras, teas);
+  TeaMaker *teaMaker = new TeaMaker(extras, teas);
 
-	delete extras;
-	delete teas;
+  delete extras;
+  delete teas;
 
-	return teaMaker;
+  return teaMaker;
 }
 
-static CoffeeMaker * createCoffeeMaker() {
-	Extras * extras = new Extras();
-	Coffees * coffees = new Coffees();
+static CoffeeMaker *createCoffeeMaker() {
+  Extras *extras = new Extras();
+  Coffees *coffees = new Coffees();
 
-	CoffeeMaker * coffeeMaker = new CoffeeMaker(extras, coffees);
+  CoffeeMaker *coffeeMaker = new CoffeeMaker(extras, coffees);
 
-	delete extras;
-	delete coffees;
+  delete extras;
+  delete coffees;
 
-	return coffeeMaker;
+  return coffeeMaker;
 }
 
-static TeaMaker * refillMachine(TeaMaker & teaMaker) {
-	if (teaMaker.getTeas() != nullptr)
-		teaMaker.restockTeas();
+static TeaMaker *refillMachine(TeaMaker &teaMaker) {
+  if (teaMaker.getTeas() != nullptr)
+    teaMaker.restockTeas();
 
-	teaMaker.restockExtras();
-	teaMaker.restockCups();
-	teaMaker.restockWater();
+  teaMaker.restockExtras();
+  teaMaker.restockCups();
+  teaMaker.restockWater();
 
-	return &teaMaker;
+  return &teaMaker;
 }
 
-static CoffeeMaker * refillMachine(CoffeeMaker & coffeeMaker) {
-	if (coffeeMaker.getCoffees() != nullptr)
-		coffeeMaker.restockCoffees();
+static CoffeeMaker *refillMachine(CoffeeMaker &coffeeMaker) {
+  if (coffeeMaker.getCoffees() != nullptr)
+    coffeeMaker.restockCoffees();
 
-	coffeeMaker.restockExtras();
-	coffeeMaker.restockCups();
-	coffeeMaker.restockWater();
+  coffeeMaker.restockExtras();
+  coffeeMaker.restockCups();
+  coffeeMaker.restockWater();
 
-	return &coffeeMaker;
+  return &coffeeMaker;
 }
 
 // =========== Main ===========
 int main() {
-	// client code 'factories'
-	TeaMaker * teaMaker = createTeaMaker();
-	CoffeeMaker * coffeeMaker = createCoffeeMaker();
+  // client code 'factories'
+  TeaMaker *teaMaker = createTeaMaker();
+  CoffeeMaker *coffeeMaker = createCoffeeMaker();
 
-	// brewing different beverage calls the template method function called 'makeBeverage'
-	// depending on if it's a tea or coffee maker, it will call the derived class's functions
-	teaMaker->makeBeverage("green tea");
-	teaMaker->makeBeverage("black tea");
-	teaMaker->makeBeverage("chia tea");
+  // brewing different beverage calls the template method function called
+  // 'makeBeverage' depending on if it's a tea or coffee maker, it will call the
+  // derived class's functions
+  teaMaker->makeBeverage("green tea");
+  teaMaker->makeBeverage("black tea");
+  teaMaker->makeBeverage("chia tea");
 
-	coffeeMaker->makeBeverage("light roast");
-	coffeeMaker->makeBeverage("medium roast");
-	coffeeMaker->makeBeverage("dark roast");
+  coffeeMaker->makeBeverage("light roast");
+  coffeeMaker->makeBeverage("medium roast");
+  coffeeMaker->makeBeverage("dark roast");
 
-	// refill all of the machines
-	teaMaker = refillMachine(*teaMaker);
-	coffeeMaker = refillMachine(*coffeeMaker);
+  // refill all of the machines
+  teaMaker = refillMachine(*teaMaker);
+  coffeeMaker = refillMachine(*coffeeMaker);
 
-	delete teaMaker;
-	delete coffeeMaker;
+  delete teaMaker;
+  delete coffeeMaker;
 
-	return 0;
+  return 0;
 }

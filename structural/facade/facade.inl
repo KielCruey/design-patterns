@@ -1,22 +1,18 @@
 // ======== FrontOfHouse ========
-inline Waiter* FrontOfHouse::GetWaiter() const {
-    return this->waiter;
-}
+inline Waiter *FrontOfHouse::GetWaiter() const { return this->waiter; }
 
 // ======== BackOfHouse ========
-inline Chef* BackOfHouse::GetChef() const {
-    return this->chef;
-}
+inline Chef *BackOfHouse::GetChef() const { return this->chef; }
 
 // ======== RestaurantFacade ========
-inline FrontOfHouse* RestaurantFacade::GetFrontOfHouse() const {
-    return this->frontOfHouse;
+inline FrontOfHouse *RestaurantFacade::GetFrontOfHouse() const {
+  return this->frontOfHouse;
 }
 
-inline BackOfHouse* RestaurantFacade::GetBackOfHouse() const {
-    return this->backOfHouse;
+inline BackOfHouse *RestaurantFacade::GetBackOfHouse() const {
+  return this->backOfHouse;
 }
 
-inline std::queue<Customer*> RestaurantFacade::GetCustomerQueue() const {
-    return this->customerQueue;
+inline std::queue<Customer *> RestaurantFacade::GetCustomerQueue() const {
+  return this->customerQueue;
 }
