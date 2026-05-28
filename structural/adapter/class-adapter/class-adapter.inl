@@ -1,5 +1,7 @@
 #define M_PI 3.14159265358979323846 // pi constant
 
+#include <cmath> // pow
+
 // ======= Circle =======
 inline double Circle::CalculateArea() { return M_PI * pow(GetRadius(), 2); }
 

@@ -1,3 +1,4 @@
+#include <string>
 
 // ============= Class Data =============
 // TVRemote needs this object in order to do TVRemote features
