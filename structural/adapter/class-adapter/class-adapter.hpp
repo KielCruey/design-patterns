@@ -80,7 +80,7 @@ private:
 // =============== Adapter ===============
 class ShapeAdapter : public Circle, public Triangle {
 public:
-  explicit ShapeAdapter(AbstractShapes *abstractShapes = NULL);
+  explicit ShapeAdapter(AbstractShapes *abstractShapes = nullptr);
   ~ShapeAdapter() override;
 
   Triangle *ConvertCircleToTriangle(Circle const *circle);

@@ -10,8 +10,7 @@ public:
   virtual void CheckHealth() = 0;
 };
 
-// ============ CONCRETE PRODUCTS -- will be created by concrete factories
-// ============
+// ============ CONCRETE PRODUCTS ============
 class ConcreteSoldier : public AbstractPerson {
 public:
   ConcreteSoldier();

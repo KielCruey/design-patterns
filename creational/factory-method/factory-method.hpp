@@ -1,3 +1,5 @@
+#include <string>
+
 // ============ Product ============
 class AbstractAnimal {
 public:
